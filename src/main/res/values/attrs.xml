@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SqFrameLayout style -->
+    <declare-styleable name="SqFrameLayout">
+        <attr name="useMaximum"
+              format="boolean" />
+    </declare-styleable>
+
+    <!-- NFScrollView style -->
+    <declare-styleable name="NFScrollView">
+        <attr name="provideFocusOnChild"
+              format="boolean" />
+        <attr name="hasOverScroll"
+              format="boolean" />
+        <attr name="overScrollTo" format="enum">
+            <enum name="x_axis" value="1" />
+            <enum name="y_axis" value="2" />
+        </attr>
+        <attr name="overScrollByPercent"
+              format="float" />
+        <attr name="overScrollBy"
+              format="dimension" />
+    </declare-styleable>
+</resources>
