@@ -76,7 +76,9 @@ public final class BusManager {
      * @param clazz implementation of {@link rx.Subscriber<java.lang.Object>}
      * @return instance of {@link rx.Subscription}
      */
-    public static Subscription add(Subscriber<Object> clazz) { return IMPL.register(clazz); }
+    public static Subscription add(Subscriber<Object> clazz) {
+        return IMPL.register(clazz);
+    }
 
     /**
      * <p>Unregister operation that object implements type {@link rx.functions.Action1} </p>

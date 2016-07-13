@@ -12,6 +12,12 @@ import java.io.StringWriter;
  */
 public abstract class AbstractApplication extends Application {
 
+    private static boolean debug;
+
+    public AbstractApplication(boolean debug) {
+        AbstractApplication.debug = debug;
+    }
+
     protected abstract String getClassTag();
 
     protected abstract boolean isLogEnabled();
@@ -34,6 +40,6 @@ public abstract class AbstractApplication extends Application {
     }
 
     public static boolean isDebug() {
-        return BuildConfig.DEBUG;
+        return debug;
     }
 }
