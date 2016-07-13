@@ -46,4 +46,5 @@ public abstract class AbstractViewHolder<D> {
     protected abstract String   getClassTag();
     protected abstract boolean  isLogEnabled();
     protected abstract void     onBindView(D data);
+
 }

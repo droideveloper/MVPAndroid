@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +26,8 @@ public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> e
 
     protected final List<D>                 dataSet;
     protected final WeakReference<Context>  contextRef;
-
-    private final Object lock = new Object();
+    protected final LayoutInflater          inflater;
+    private final Object                    lock = new Object();
 
     public AbstractListAdapter(Context context) {
         this(context, new ArrayList<D>());
@@ -36,6 +37,12 @@ public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> e
         this.dataSet = dataSet;
         this.contextRef = context != null ?
                 new WeakReference<>(context) : null;
+        Resources.Theme theme = context.getTheme();
+        if(theme != null) {
+            this.inflater = LayoutInflater.from(new ContextThemeWrapper(context, theme));
+        } else {
+            this.inflater = LayoutInflater.from(context);
+        }
     }
 
     public final void add(D object) {
@@ -107,7 +114,7 @@ public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> e
     }
 
     @Override public long getItemId(int position) {
-        return 0L;
+        return Long.MAX_VALUE;
     }
 
     @Override public int getViewTypeCount() {

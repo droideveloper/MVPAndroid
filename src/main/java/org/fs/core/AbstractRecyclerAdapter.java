@@ -22,6 +22,7 @@ public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHold
     protected final List<D>                 dataSet;
     protected final WeakReference<Context>  contextRef;
 
+
     public AbstractRecyclerAdapter(List<D> dataSet, Context context) {
         this.dataSet = dataSet;
         this.contextRef = context != null
@@ -90,6 +91,8 @@ public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHold
             if (index != -1) {
                 dataSet.remove(data);
                 notifyItemRemoved(index);
+            } else {
+                dataSet.add(data);
             }
         }
     }
@@ -114,6 +117,7 @@ public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHold
      *
      * @return 0 or actual count of dataSet
      */
+
     @Override public int getItemCount() {
         return dataSet == null
                 ? 0
@@ -125,8 +129,8 @@ public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHold
      * @param index index we need to look for
      * @return D or null
      */
-    protected D getItemAt(int index) {
-        int limit = dataSet != null ? dataSet.size() : 0;
+    protected final D getItemAtIndex(int index) {
+        int limit = dataSet.size();
         if(index < 0 || index >= limit || limit == 0)
             return null;
         return dataSet.get(index);
@@ -136,7 +140,7 @@ public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHold
      *
      * @return Context instance or null
      */
-    protected Context getContext() {
+    protected final Context getContext() {
         return contextRef != null
                 ? contextRef.get()
                 : null;
