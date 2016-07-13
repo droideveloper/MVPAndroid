@@ -3,6 +3,8 @@ package org.fs.core;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
 
+import org.fs.common.IPresenter;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -10,10 +12,16 @@ import java.io.StringWriter;
  * Created by Fatih on 25/11/15.
  * as org.fs.core.AbstractPreferenceFragment
  */
-public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompat {
+public abstract class AbstractPreferenceFragment<P extends IPresenter> extends PreferenceFragmentCompat {
 
-    protected abstract String getClassTag();
+    protected final P presenter;
 
+    public AbstractPreferenceFragment() {
+        this.presenter = providePresenter();
+    }
+
+    protected abstract String   getClassTag();
+    protected abstract P        providePresenter();
     protected abstract boolean isLogEnabled();
 
     protected void log(final String str) {

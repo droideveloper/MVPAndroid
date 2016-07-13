@@ -17,12 +17,12 @@ public abstract class AbstractService<P extends IPresenter> extends Service {
     protected final P presenter;
 
     public AbstractService() {
-        presenter = presenter();
+        presenter = providePresenter();
     }
 
     protected abstract String   getClassTag();
     protected abstract boolean  isLogEnabled();
-    protected abstract P        presenter();
+    protected abstract P        providePresenter();
 
     protected void log(final String str) {
         log(Log.DEBUG, str);

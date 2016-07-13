@@ -19,12 +19,14 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
     protected final P presenter;
 
     public AbstractDialogFragment() {
-        presenter = presenter();
+        presenter = providePresenter();
     }
 
     protected abstract String   getClassTag();
     protected abstract boolean  isLogEnabled();
-    protected abstract P        presenter();
+    //and in the end we might want to use
+    //Dagger2 injection for creating one of these
+    protected abstract P        providePresenter();
 
     protected void log(final String str) {
         log(Log.DEBUG, str);

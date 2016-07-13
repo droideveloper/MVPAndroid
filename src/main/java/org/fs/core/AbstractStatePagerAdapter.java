@@ -48,13 +48,11 @@ public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAda
         }
     }
 
-    @Override
-    public final Fragment getItem(int position) {
+    @Override public final Fragment getItem(int position) {
         return onBind(position, getItemAtIndex(position));
     }
 
-    @Override
-    public final int getCount() {
+    @Override public final int getCount() {
         return dataSet == null
                 ? 0
                 : dataSet.size();

@@ -17,12 +17,12 @@ public abstract class AbstractActivity<P extends IPresenter> extends AppCompatAc
     protected final P presenter;
 
     public AbstractActivity() {
-        presenter = presenter();
+        presenter = providePresenter();
     }
 
     protected abstract String   getClassTag();
     protected abstract boolean  isLogEnabled();
-    protected abstract P        presenter();//implement this to provide presenter
+    protected abstract P        providePresenter();//implement this to provide presenter
 
     protected void log(final String str) {
         log(Log.DEBUG, str);

@@ -17,12 +17,12 @@ public abstract class AbstractFragment<P extends IPresenter> extends Fragment {
     protected final P presenter;
 
     public AbstractFragment() {
-        presenter = presenter();
+        presenter = providePresenter();
     }
 
     protected abstract String   getClassTag();
     protected abstract boolean  isLogEnabled();
-    protected abstract P        presenter();
+    protected abstract P        providePresenter();
 
     protected void log(final String str) {
         log(Log.DEBUG, str);

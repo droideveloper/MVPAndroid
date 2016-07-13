@@ -17,11 +17,9 @@ public abstract class AbstractRecyclerViewHolder<T> extends RecyclerView.ViewHol
         super(itemView);
     }
 
-    protected abstract String getClassTag();
-
-    protected abstract boolean isLogEnabled();
-
-    protected abstract void onBindView(T data);
+    protected abstract String   getClassTag();
+    protected abstract boolean  isLogEnabled();
+    protected abstract void     onBindView(T data);
 
     protected void log(final String str) {
         log(Log.DEBUG, str);

@@ -3,6 +3,8 @@ package org.fs.core;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 
+import org.fs.common.IPresenter;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -10,11 +12,17 @@ import java.io.StringWriter;
  * Created by Fatih on 25/11/15.
  * as org.fs.core.AbstractPreferenceActivity
  */
-public abstract class AbstractPreferenceActivity extends PreferenceActivity {
+public abstract class AbstractPreferenceActivity<P extends IPresenter> extends PreferenceActivity {
 
-    protected abstract String getClassTag();
+    protected final P presenter;
 
-    protected abstract boolean isLogEnabled();
+    public AbstractPreferenceActivity() {
+        this.presenter = providePresenter();
+    }
+
+    protected abstract String   getClassTag();
+    protected abstract boolean  isLogEnabled();
+    protected abstract P        providePresenter();
 
     protected void log(final String str) {
         log(Log.DEBUG, str);
