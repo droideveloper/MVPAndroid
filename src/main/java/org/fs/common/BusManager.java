@@ -3,6 +3,7 @@ package org.fs.common;
 import org.fs.exception.AndroidException;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.subjects.PublishSubject;
@@ -39,6 +40,8 @@ public final class BusManager {
         return rxBus.subscribe(clazz);
     }
 
+    public Subscription register(Subscriber<Object> clazz) { return rxBus.subscribe(clazz); }
+
     public void unregister(Subscription clazz) {
         //if it's null or not unsubscribed then we are good to unregister it
         if(clazz != null && !clazz.isUnsubscribed()) {
@@ -49,7 +52,6 @@ public final class BusManager {
     public boolean hasObservers() {
         return rxBus.hasObservers();
     }
-
 
     /**
      * <p>Send event to registered objects or it's death</p>
@@ -67,6 +69,14 @@ public final class BusManager {
     public static Subscription add(Action1<Object> clazz) {
         return IMPL.register(clazz);
     }
+
+
+     /**
+     * <p>Register operation that object extends type {@link rx.Subscriber<java.lang.Object>}</p>
+     * @param clazz implementation of {@link rx.Subscriber<java.lang.Object>}
+     * @return instance of {@link rx.Subscription}
+     */
+    public static Subscription add(Subscriber<Object> clazz) { return IMPL.register(clazz); }
 
     /**
      * <p>Unregister operation that object implements type {@link rx.functions.Action1} </p>
