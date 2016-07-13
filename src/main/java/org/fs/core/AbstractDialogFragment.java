@@ -54,9 +54,8 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
     /**
      * allowing state loss all the time to support various devices.
      */
-    @Override
-    public final void dismiss() {
-        dismissAllowingStateLoss();
+    @Override public final void dismiss() {
+        super.dismiss();//change of state loss
     }
 
     /**
@@ -65,10 +64,9 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
      * @param tag tag of fragment
      * @return int state
      */
-    @Override
-    public final int show(FragmentTransaction transaction, String tag) {
+    @Override public final int show(FragmentTransaction transaction, String tag) {
         return transaction.add(this, tag)
-                          .commitAllowingStateLoss();
+                          .commit();//change of state loss
     }
 
     /**
@@ -76,8 +74,7 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
      * @param manager FragmentManager instance
      * @param tag tag of fragment
      */
-    @Override
-    public final void show(FragmentManager manager, String tag) {
+    @Override public final void show(FragmentManager manager, String tag) {
         FragmentTransaction trans = manager.beginTransaction();
         show(trans, tag);
     }
