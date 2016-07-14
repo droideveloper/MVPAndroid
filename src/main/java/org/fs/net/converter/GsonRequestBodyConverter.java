@@ -33,8 +33,7 @@ public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
         this.mTypeAdapter = mTypeAdapter;
     }
 
-    @Override
-    public RequestBody convert(T value) throws IOException {
+    @Override public RequestBody convert(T value) throws IOException {
         PreconditionUtility.checkNotNull(value, "can not deserialize null object, value is null");
         Buffer buffer = new Buffer();
         Writer writer = new OutputStreamWriter(buffer.outputStream(), DEFAULT_CHARSET);

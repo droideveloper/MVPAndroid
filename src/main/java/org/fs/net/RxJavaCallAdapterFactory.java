@@ -65,8 +65,7 @@ public final class RxJavaCallAdapterFactory extends CallAdapter.Factory {
         this.scheduler = scheduler;
     }
 
-    @Override
-    public CallAdapter<?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
+    @Override public CallAdapter<?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
         Class<?> rawType = getRawType(returnType);
         String canonicalName = rawType.getCanonicalName();
         boolean isSingle = "rx.Single".equals(canonicalName);

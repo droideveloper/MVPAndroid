@@ -44,14 +44,12 @@ public class GsonConverterFactory extends Converter.Factory {
         this.mGson = mGson;
     }
 
-    @Override
-    public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+    @Override public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         TypeAdapter<?> typeAdapter = typeAdapterFromType(type);
         return new GsonResponseBodyConverter<>(typeAdapter, mGson);
     }
 
-    @Override
-    public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+    @Override public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
         TypeAdapter<?> typeAdapter = typeAdapterFromType(type);
         return new GsonRequestBodyConverter<>(typeAdapter, mGson);
     }

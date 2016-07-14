@@ -25,8 +25,7 @@ public class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
         this.mTypeAdapter = mTypeAdapter;
     }
 
-    @Override
-    public T convert(ResponseBody value) throws IOException {
+    @Override public T convert(ResponseBody value) throws IOException {
         PreconditionUtility.checkNotNull(value, "response error");
         try {
             JsonReader reader = mGson.newJsonReader(value.charStream());
