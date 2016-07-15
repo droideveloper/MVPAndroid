@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Fatih.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.fs.common;
 
 import org.fs.exception.AndroidException;
@@ -10,10 +25,6 @@ import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
-/**
- * Created by Fatih on 21/05/16.
- * as org.fs.common.BusManager
- */
 public final class BusManager {
 
     //changing this into static instance why ? because I don't want it to go through dagger2 with this just crazy
@@ -33,24 +44,26 @@ public final class BusManager {
     }
 
     public Observable<Object> toObservable() {
-        return rxBus;
+      return rxBus;
     }
 
     public Subscription register(Action1<Object> clazz) {
-        return rxBus.subscribe(clazz);
+      return rxBus.subscribe(clazz);
     }
 
-    public Subscription register(Subscriber<Object> clazz) { return rxBus.subscribe(clazz); }
+    public Subscription register(Subscriber<Object> clazz) {
+      return rxBus.subscribe(clazz);
+    }
 
     public void unregister(Subscription clazz) {
-        //if it's null or not unsubscribed then we are good to unregister it
-        if(clazz != null && !clazz.isUnsubscribed()) {
-            clazz.unsubscribe();
-        }
+      //if it's null or not unsubscribed then we are good to unregister it
+      if(clazz != null && !clazz.isUnsubscribed()) {
+        clazz.unsubscribe();
+      }
     }
 
     public boolean hasObservers() {
-        return rxBus.hasObservers();
+      return rxBus.hasObservers();
     }
 
     /**
@@ -58,7 +71,7 @@ public final class BusManager {
      * @param event event object to send which should implement {@link org.fs.common.IEvent}
      */
     public static void send(Object event) {
-        IMPL.post(event);
+      IMPL.post(event);
     }
 
     /**
@@ -67,7 +80,7 @@ public final class BusManager {
      * @return instance of {@link rx.Subscription}
      */
     public static Subscription add(Action1<Object> clazz) {
-        return IMPL.register(clazz);
+      return IMPL.register(clazz);
     }
 
 
@@ -77,7 +90,7 @@ public final class BusManager {
      * @return instance of {@link rx.Subscription}
      */
     public static Subscription add(Subscriber<Object> clazz) {
-        return IMPL.register(clazz);
+      return IMPL.register(clazz);
     }
 
     /**
@@ -85,6 +98,6 @@ public final class BusManager {
      * @param clazz previous instance of registration {@link rx.Subscription}
      */
     public static void remove(Subscription clazz) {
-        IMPL.unregister(clazz);
+      IMPL.unregister(clazz);
     }
 }

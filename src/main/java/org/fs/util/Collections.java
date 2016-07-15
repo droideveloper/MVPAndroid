@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Fatih.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.fs.util;
 
 import org.fs.exception.AndroidException;
@@ -5,14 +20,10 @@ import org.fs.exception.AndroidException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Created by Fatih on 18/06/16.
- * as org.fs.util.Collections
- */
 public final class Collections {
 
     private Collections() {
-        throw new AndroidException("no sugar for ya");
+      throw new AndroidException("no sugar for ya");
     }
 
     /**
@@ -24,15 +35,15 @@ public final class Collections {
      * @throws AndroidException if target is null or empty and also if predicate is null
      */
     public static <T> Collection<T> filter(Collection<T> target, IPredicate<T> predicate) {
-        if(target == null || target.isEmpty()) throw new AndroidException("target is empty or null");
-        if(predicate == null) throw new AndroidException("predicate is null, can't apply filter");
-        Collection<T> result = new ArrayList<>();
-        for (T item : target) {
-            if(predicate.apply(item)) {
-                result.add(item);
-            }
+      if(target == null || target.isEmpty()) throw new AndroidException("target is empty or null");
+      if(predicate == null) throw new AndroidException("predicate is null, can't apply filter");
+      Collection<T> result = new ArrayList<>();
+      for (T item : target) {
+        if(predicate.apply(item)) {
+          result.add(item);
         }
-        return result;
+      }
+      return result;
     }
 
     /**
@@ -42,7 +53,7 @@ public final class Collections {
      * @return true if empty or null false else otherwise
      */
     public static <T> boolean isNullOrEmpty(Collection<T> collection) {
-        return collection == null || collection.isEmpty();
+      return collection == null || collection.isEmpty();
     }
 
     /**

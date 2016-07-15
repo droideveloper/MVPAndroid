@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Fatih.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.fs.core;
 
 import android.content.Context;
@@ -11,32 +26,28 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
 
-/**
- * Created by Fatih on 31/05/16.
- * as org.fs.core.AbstractOrmliteHelper
- */
 public abstract class AbstractOrmliteHelper extends OrmLiteSqliteOpenHelper {
 
     public AbstractOrmliteHelper(Context context, String dbName, int dbVersion, int dbConfig) {
-        super(context, dbName, null, dbVersion, dbConfig);
+      super(context, dbName, null, dbVersion, dbConfig);
     }
 
 
     @Override public final void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-        try {
-            createTables(connectionSource);
-        } catch (SQLException e) {
-            log(e);
-        }
+      try {
+        createTables(connectionSource);
+      } catch (SQLException e) {
+        log(e);
+      }
     }
 
     @Override public final void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-        try {
-            dropTables(connectionSource);
-            onCreate(database, connectionSource);
-        } catch (SQLException e) {
-            log(e);
-        }
+      try {
+        dropTables(connectionSource);
+        onCreate(database, connectionSource);
+      } catch (SQLException e) {
+        log(e);
+      }
     }
 
     protected abstract void     createTables(ConnectionSource cs) throws SQLException;
@@ -46,19 +57,19 @@ public abstract class AbstractOrmliteHelper extends OrmLiteSqliteOpenHelper {
 
 
     protected void log(final String str) {
-        log(Log.DEBUG, str);
+      log(Log.DEBUG, str);
     }
 
     protected void log(Exception e) {
-        StringWriter strWriter = new StringWriter();
-        PrintWriter prtWriter = new PrintWriter(strWriter);
-        e.printStackTrace(prtWriter);
-        log(Log.ERROR, strWriter.toString());
+      StringWriter strWriter = new StringWriter();
+      PrintWriter prtWriter = new PrintWriter(strWriter);
+      e.printStackTrace(prtWriter);
+      log(Log.ERROR, strWriter.toString());
     }
 
     protected void log(final int lv, final String str) {
-        if(isLogEnabled()) {
-            Log.println(lv, getClassTag(), str);
-        }
+      if(isLogEnabled()) {
+        Log.println(lv, getClassTag(), str);
+      }
     }
 }

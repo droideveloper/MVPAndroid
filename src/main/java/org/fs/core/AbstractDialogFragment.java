@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Fatih.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.fs.core;
 
 import android.support.v4.app.DialogFragment;
@@ -10,16 +25,12 @@ import org.fs.common.IPresenter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
- * Created by Fatih on 30/10/15.
- * as org.fs.core.AbstractDialogFragment
- */
 public abstract class AbstractDialogFragment<P extends IPresenter> extends DialogFragment {
 
     protected final P presenter;
 
     public AbstractDialogFragment() {
-        presenter = providePresenter();
+      presenter = providePresenter();
     }
 
     protected abstract String   getClassTag();
@@ -29,20 +40,20 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
     protected abstract P        providePresenter();
 
     protected void log(final String str) {
-        log(Log.DEBUG, str);
+      log(Log.DEBUG, str);
     }
 
     protected void log(Exception e) {
-        StringWriter strWriter = new StringWriter();
-        PrintWriter prtWriter = new PrintWriter(strWriter);
-        e.printStackTrace(prtWriter);
-        log(Log.ERROR, strWriter.toString());
+      StringWriter strWriter = new StringWriter();
+      PrintWriter prtWriter = new PrintWriter(strWriter);
+      e.printStackTrace(prtWriter);
+      log(Log.ERROR, strWriter.toString());
     }
 
     protected void log(final int lv, final String str) {
-        if(isLogEnabled()) {
-            Log.println(lv, getClassTag(), str);
-        }
+      if(isLogEnabled()) {
+        Log.println(lv, getClassTag(), str);
+      }
     }
 
     /**
@@ -50,14 +61,14 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
      * @return true or false
      */
     protected boolean isCallingSafe() {
-        return getActivity() != null && isAdded();
+      return getActivity() != null && isAdded();
     }
 
     /**
      * allowing state loss all the time to support various devices.
      */
     @Override public final void dismiss() {
-        super.dismiss();//change of state loss
+      super.dismiss();//change of state loss
     }
 
     /**
@@ -67,8 +78,8 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
      * @return int state
      */
     @Override public final int show(FragmentTransaction transaction, String tag) {
-        return transaction.add(this, tag)
-                          .commit();//change of state loss
+      return transaction.add(this, tag)
+                        .commit();//change of state loss
     }
 
     /**
@@ -77,7 +88,7 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
      * @param tag tag of fragment
      */
     @Override public final void show(FragmentManager manager, String tag) {
-        FragmentTransaction trans = manager.beginTransaction();
-        show(trans, tag);
+      FragmentTransaction trans = manager.beginTransaction();
+      show(trans, tag);
     }
 }

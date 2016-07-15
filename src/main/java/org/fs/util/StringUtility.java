@@ -1,15 +1,26 @@
+/*
+ * Copyright (C) 2016 Fatih.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.fs.util;
 
 import org.fs.exception.AndroidException;
 
-/**
- * Created by Fatih on 01/11/15.
- * as org.fs.util.Strings
- */
 public final class StringUtility {
 
     private StringUtility() {
-        throw new AndroidException("no instance for you!");
+      throw new AndroidException("no instance for you!");
     }
 
     /**
@@ -20,13 +31,13 @@ public final class StringUtility {
      * @return
      */
     public static <T> boolean isNullOrEmpty(T object) {
-        if(object == null)
-            return true;
-        if(object instanceof String) {
-            String str = (String)object;
-            return isEmpty(str);
-        }
-        return false;
+      if(object == null)
+        return true;
+      if(object instanceof String) {
+        String str = (String)object;
+        return isEmpty(str);
+      }
+      return false;
     }
 
     /**
@@ -38,10 +49,10 @@ public final class StringUtility {
      * @return
      */
     public static boolean isEmpty(CharSequence str) {
-        if (str == null || str.length() == 0)
-            return true;
-        else
-            return false;
+      if (str == null || str.length() == 0)
+        return true;
+      else
+        return false;
     }
 
     /**
@@ -50,10 +61,10 @@ public final class StringUtility {
      * @return
      */
     public static boolean hasHtmlTag(final String str) {
-        //we assume that if it contains html start and end tag
+      //we assume that if it contains html start and end tag
         //we hit the Html tag some ignore occur like <br />, we don't care about it for now!.
-        return !isNullOrEmpty(str)
-                && str.contains("<")
-                && str.contains("/>");
+      return !isNullOrEmpty(str)
+          && str.contains("<")
+          && str.contains("/>");
     }
 }

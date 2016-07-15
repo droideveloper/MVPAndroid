@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Fatih.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.fs.core;
 
 import android.support.annotation.NonNull;
@@ -10,11 +25,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
-
-/**
- * Created by Fatih on 30/10/15.
- * as org.fs.core.AbstractPagerAdapter
- */
 public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
 
     protected List<D> dataSet = null;
@@ -24,65 +34,61 @@ public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
         this.dataSet = dataSet;
     }
 
-    protected abstract String getClassTag();
-
-    protected abstract boolean isLogEnabled();
-
+    protected abstract String   getClassTag();
+    protected abstract boolean  isLogEnabled();
     protected abstract Fragment onBind(int position, D element);
 
     protected final void log(final String str) {
-        log(Log.DEBUG, str);
+      log(Log.DEBUG, str);
     }
 
-    @Override
-    public final Fragment getItem(int position) {
-        return onBind(position, getItemAtIndex(position));
+    @Override public final Fragment getItem(int position) {
+      return onBind(position, getItemAtIndex(position));
     }
 
     protected final void log(Exception e) {
-        StringWriter strWriter = new StringWriter();
-        PrintWriter prtWriter = new PrintWriter(strWriter);
-        e.printStackTrace(prtWriter);
-        log(Log.ERROR, strWriter.toString());
+      StringWriter strWriter = new StringWriter();
+      PrintWriter prtWriter = new PrintWriter(strWriter);
+      e.printStackTrace(prtWriter);
+      log(Log.ERROR, strWriter.toString());
     }
 
     protected final void log(final int lv, final String str) {
-        if(isLogEnabled()) {
-            Log.println(lv, getClassTag(), str);
-        }
+      if(isLogEnabled()) {
+        Log.println(lv, getClassTag(), str);
+      }
     }
 
     public void appendData(@NonNull D data, boolean front) {
-        if(dataSet != null) {
-            if (front) {
-                dataSet.add(0, data);
-            } else {
-                dataSet.add(data);
-            }
+      if(dataSet != null) {
+        if (front) {
+          dataSet.add(0, data);
+        } else {
+          dataSet.add(data);
         }
+      }
     }
 
     public void appendData(@NonNull List<D> data, boolean front) {
-        if(dataSet != null) {
-            if(front) {
-                dataSet.addAll(0, data);
-            } else {
-                dataSet.addAll(data);
-            }
+      if(dataSet != null) {
+        if(front) {
+          dataSet.addAll(0, data);
+        } else {
+          dataSet.addAll(data);
         }
+      }
     }
 
-    @Override
-    public final int getCount() {
-        return dataSet == null
-                ? 0
-                : dataSet.size();
+    @Override public final int getCount() {
+      return dataSet == null
+          ? 0
+          : dataSet.size();
     }
 
     protected final D getItemAtIndex(int index) {
-        int limit = dataSet.size();
-        if(index < 0 || index >= limit || limit == 0)
-            return null;
-        return dataSet.get(index);
+      int limit = dataSet.size();
+      if(index < 0 || index >= limit || limit == 0)
+        return null;
+      return dataSet.get(index);
     }
 }
