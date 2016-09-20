@@ -22,24 +22,24 @@ import java.io.StringWriter;
 
 public abstract class AbstractManager {
 
-    protected abstract String  getClassTag();
-    protected abstract boolean isLogEnabled();
+  protected abstract String  getClassTag();
+  protected abstract boolean isLogEnabled();
 
 
-    protected void log(final String msg) {
-        log(Log.DEBUG, msg);
+  protected void log(final String msg) {
+      log(Log.DEBUG, msg);
+  }
+
+  protected void log(final int lv, final String msg) {
+    if (isLogEnabled()) {
+      Log.println(lv, getClassTag(), msg);
     }
+  }
 
-    protected void log(final int lv, final String msg) {
-      if (isLogEnabled()) {
-        Log.println(lv, getClassTag(), msg);
-      }
-    }
-
-    protected void log(Throwable exp) {
-      StringWriter str = new StringWriter(128);
-      PrintWriter  ptr = new PrintWriter(str);
-      exp.printStackTrace(ptr);
-      log(Log.ERROR, str.toString());
-    }
+  protected void log(Throwable exp) {
+    StringWriter str = new StringWriter(128);
+    PrintWriter  ptr = new PrintWriter(str);
+    exp.printStackTrace(ptr);
+    log(Log.ERROR, str.toString());
+  }
 }

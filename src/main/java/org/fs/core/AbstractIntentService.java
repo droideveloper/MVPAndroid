@@ -25,31 +25,28 @@ import java.io.StringWriter;
 
 public abstract class AbstractIntentService<P extends IPresenter> extends IntentService {
 
-    protected final P presenter;
+  public AbstractIntentService(final String strName) {
+    super(strName);
+  }
 
-    public AbstractIntentService(final String strName) {
-      super(strName);
-      presenter = providePresenter();
+  protected abstract String   getClassTag();
+  protected abstract boolean  isLogEnabled();
+  protected abstract P        providePresenter();
+
+  protected void log(final String str) {
+    log(Log.DEBUG, str);
+  }
+
+  protected void log(Exception e) {
+    StringWriter strWriter = new StringWriter();
+    PrintWriter prtWriter = new PrintWriter(strWriter);
+    e.printStackTrace(prtWriter);
+    log(Log.ERROR, strWriter.toString());
+  }
+
+  protected void log(final int lv, final String str) {
+    if(isLogEnabled()) {
+      Log.println(lv, getClassTag(), str);
     }
-
-    protected abstract String   getClassTag();
-    protected abstract boolean  isLogEnabled();
-    protected abstract P        providePresenter();
-
-    protected void log(final String str) {
-      log(Log.DEBUG, str);
-    }
-
-    protected void log(Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter prtWriter = new PrintWriter(strWriter);
-      e.printStackTrace(prtWriter);
-      log(Log.ERROR, strWriter.toString());
-    }
-
-    protected void log(final int lv, final String str) {
-      if(isLogEnabled()) {
-        Log.println(lv, getClassTag(), str);
-      }
-    }
+  }
 }

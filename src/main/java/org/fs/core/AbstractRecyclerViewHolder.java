@@ -24,36 +24,41 @@ import java.io.StringWriter;
 
 public abstract class AbstractRecyclerViewHolder<T> extends RecyclerView.ViewHolder {
 
-    public AbstractRecyclerViewHolder(View itemView) {
-      super(itemView);
-    }
+  public AbstractRecyclerViewHolder(View itemView) {
+    super(itemView);
+  }
 
-    protected abstract String   getClassTag();
-    protected abstract boolean  isLogEnabled();
-    protected abstract void     onBindView(T data);
+  protected abstract String   getClassTag();
+  protected abstract boolean  isLogEnabled();
 
-    protected void log(final String str) {
-      log(Log.DEBUG, str);
-    }
+  /**
+   * Need this public to be able to access it from outside
+   * @param data T type of data
+   */
+  public abstract void     onBindView(T data);
 
-    protected void log(Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter prtWriter = new PrintWriter(strWriter);
-      e.printStackTrace(prtWriter);
-      log(Log.ERROR, strWriter.toString());
-    }
+  protected void log(final String str) {
+    log(Log.DEBUG, str);
+  }
 
-    protected void log(final int lv, final String str) {
-      if(isLogEnabled()) {
-        Log.println(lv, getClassTag(), str);
-      }
-    }
+  protected void log(Exception e) {
+    StringWriter strWriter = new StringWriter();
+    PrintWriter prtWriter = new PrintWriter(strWriter);
+    e.printStackTrace(prtWriter);
+    log(Log.ERROR, strWriter.toString());
+  }
 
-    /**
-     * method returns contentView from structured view
-     * @return
-     */
-    protected View getContentView() {
-      return itemView != null ? itemView : null;
+  protected void log(final int lv, final String str) {
+    if(isLogEnabled()) {
+      Log.println(lv, getClassTag(), str);
     }
+  }
+
+  /**
+   * method returns contentView from structured view
+   * @return View instance of as root
+   */
+  protected View getView() {
+    return itemView != null ? itemView : null;
+  }
 }

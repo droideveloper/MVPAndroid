@@ -23,34 +23,34 @@ import java.io.StringWriter;
 
 public abstract class AbstractApplication extends Application {
 
-    private static boolean debug;
+  private static boolean debug;
 
-    public AbstractApplication(boolean debug) {
-      AbstractApplication.debug = debug;
+  public AbstractApplication(boolean debug) {
+    AbstractApplication.debug = debug;
+  }
+
+  protected abstract String getClassTag();
+
+  protected abstract boolean isLogEnabled();
+
+  protected void log(final String str) {
+    log(Log.DEBUG, str);
+  }
+
+  protected void log(Exception e) {
+    StringWriter strWriter = new StringWriter();
+    PrintWriter prtWriter = new PrintWriter(strWriter);
+    e.printStackTrace(prtWriter);
+    log(Log.ERROR, strWriter.toString());
+  }
+
+  protected void log(final int lv, final String str) {
+    if (isLogEnabled()) {
+      Log.println(lv, getClassTag(), str);
     }
+  }
 
-    protected abstract String getClassTag();
-
-    protected abstract boolean isLogEnabled();
-
-    protected void log(final String str) {
-      log(Log.DEBUG, str);
-    }
-
-    protected void log(Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter prtWriter = new PrintWriter(strWriter);
-      e.printStackTrace(prtWriter);
-      log(Log.ERROR, strWriter.toString());
-    }
-
-    protected void log(final int lv, final String str) {
-      if (isLogEnabled()) {
-        Log.println(lv, getClassTag(), str);
-      }
-    }
-
-    public static boolean isDebug() {
-      return debug;
-    }
+  public static boolean isDebug() {
+    return debug;
+  }
 }

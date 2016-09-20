@@ -17,21 +17,21 @@ import retrofit2.Converter;
  */
 public class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
 
-    private final Gson           mGson;
-    private final TypeAdapter<T> mTypeAdapter;
+  private final Gson           mGson;
+  private final TypeAdapter<T> mTypeAdapter;
 
-    public GsonResponseBodyConverter(final TypeAdapter<T> mTypeAdapter, final Gson mGson) {
-        this.mGson = mGson;
-        this.mTypeAdapter = mTypeAdapter;
-    }
+  public GsonResponseBodyConverter(final TypeAdapter<T> mTypeAdapter, final Gson mGson) {
+    this.mGson = mGson;
+    this.mTypeAdapter = mTypeAdapter;
+  }
 
-    @Override public T convert(ResponseBody value) throws IOException {
-        PreconditionUtility.checkNotNull(value, "response error");
-        try {
-            JsonReader reader = mGson.newJsonReader(value.charStream());
-            return mTypeAdapter.read(reader);
-        } finally {
-            value.close();
-        }
+  @Override public T convert(ResponseBody value) throws IOException {
+    PreconditionUtility.checkNotNull(value, "response error");
+    try {
+      JsonReader reader = mGson.newJsonReader(value.charStream());
+      return mTypeAdapter.read(reader);
+    } finally {
+      value.close();
     }
+  }
 }

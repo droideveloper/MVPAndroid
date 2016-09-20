@@ -25,30 +25,27 @@ import java.io.StringWriter;
 
 public abstract class AbstractActivity<P extends IPresenter> extends AppCompatActivity {
 
-    protected final P presenter;
+  /**
+   * P is in here is definition not that is required in this abstraction
+   */
 
-    public AbstractActivity() {
-      presenter = providePresenter();
+  protected abstract String   getClassTag();
+  protected abstract boolean  isLogEnabled();
+
+  protected void log(final String str) {
+    log(Log.DEBUG, str);
+  }
+
+  protected void log(Exception e) {
+    StringWriter strWriter = new StringWriter();
+    PrintWriter  prtWriter = new PrintWriter(strWriter);
+    e.printStackTrace(prtWriter);
+    log(Log.ERROR, strWriter.toString());
+  }
+
+  protected void log(final int lv, final String str) {
+    if(isLogEnabled()) {
+      Log.println(lv, getClassTag(), str);
     }
-
-    protected abstract String   getClassTag();
-    protected abstract boolean  isLogEnabled();
-    protected abstract P        providePresenter();//implement this to provide presenter
-
-    protected void log(final String str) {
-      log(Log.DEBUG, str);
-    }
-
-    protected void log(Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter  prtWriter = new PrintWriter(strWriter);
-      e.printStackTrace(prtWriter);
-      log(Log.ERROR, strWriter.toString());
-    }
-
-    protected void log(final int lv, final String str) {
-      if(isLogEnabled()) {
-        Log.println(lv, getClassTag(), str);
-      }
-    }
+  }
 }

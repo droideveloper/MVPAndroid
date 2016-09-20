@@ -25,30 +25,23 @@ import java.io.StringWriter;
 
 public abstract class AbstractService<P extends IPresenter> extends Service {
 
-    protected final P presenter;
+  protected abstract String   getClassTag();
+  protected abstract boolean  isLogEnabled();
 
-    public AbstractService() {
-      presenter = providePresenter();
+  protected void log(final String str) {
+    log(Log.DEBUG, str);
+  }
+
+  protected void log(Exception e) {
+    StringWriter strWriter = new StringWriter();
+    PrintWriter prtWriter = new PrintWriter(strWriter);
+    e.printStackTrace(prtWriter);
+    log(Log.ERROR, strWriter.toString());
+  }
+
+  protected void log(final int lv, final String str) {
+    if(isLogEnabled()) {
+      Log.println(lv, getClassTag(), str);
     }
-
-    protected abstract String   getClassTag();
-    protected abstract boolean  isLogEnabled();
-    protected abstract P        providePresenter();
-
-    protected void log(final String str) {
-      log(Log.DEBUG, str);
-    }
-
-    protected void log(Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter prtWriter = new PrintWriter(strWriter);
-      e.printStackTrace(prtWriter);
-      log(Log.ERROR, strWriter.toString());
-    }
-
-    protected void log(final int lv, final String str) {
-      if(isLogEnabled()) {
-        Log.println(lv, getClassTag(), str);
-      }
-    }
+  }
 }

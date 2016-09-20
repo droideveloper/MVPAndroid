@@ -27,68 +27,59 @@ import java.io.StringWriter;
 
 public abstract class AbstractDialogFragment<P extends IPresenter> extends DialogFragment {
 
-    protected final P presenter;
+  protected abstract String   getClassTag();
+  protected abstract boolean  isLogEnabled();
 
-    public AbstractDialogFragment() {
-      presenter = providePresenter();
+  protected void log(final String str) {
+    log(Log.DEBUG, str);
+  }
+
+  protected void log(Exception e) {
+    StringWriter strWriter = new StringWriter();
+    PrintWriter prtWriter = new PrintWriter(strWriter);
+    e.printStackTrace(prtWriter);
+    log(Log.ERROR, strWriter.toString());
+  }
+
+  protected void log(final int lv, final String str) {
+    if(isLogEnabled()) {
+      Log.println(lv, getClassTag(), str);
     }
+  }
 
-    protected abstract String   getClassTag();
-    protected abstract boolean  isLogEnabled();
-    //and in the end we might want to use
-    //Dagger2 injection for creating one of these
-    protected abstract P        providePresenter();
+  /**
+   * calling this fragment system checks if this fragment attached to Window and its activity is alive...
+   * @return true or false
+   */
+  protected boolean isCallingSafe() {
+    return getActivity() != null && isAdded();
+  }
 
-    protected void log(final String str) {
-      log(Log.DEBUG, str);
-    }
+  /**
+   * allowing state loss all the time to support various devices.
+   */
+  @Override public final void dismiss() {
+    super.dismiss();//change of state loss
+  }
 
-    protected void log(Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter prtWriter = new PrintWriter(strWriter);
-      e.printStackTrace(prtWriter);
-      log(Log.ERROR, strWriter.toString());
-    }
+  /**
+   * overriden for committing with state loss
+   * @param transaction FragmentTransaction instance
+   * @param tag tag of fragment
+   * @return int state
+   */
+  @Override public final int show(FragmentTransaction transaction, String tag) {
+    return transaction.add(this, tag)
+                      .commit();//change of state loss
+  }
 
-    protected void log(final int lv, final String str) {
-      if(isLogEnabled()) {
-        Log.println(lv, getClassTag(), str);
-      }
-    }
-
-    /**
-     * calling this fragment system checks if this fragment attached to Window and its activity is alive...
-     * @return true or false
-     */
-    protected boolean isCallingSafe() {
-      return getActivity() != null && isAdded();
-    }
-
-    /**
-     * allowing state loss all the time to support various devices.
-     */
-    @Override public final void dismiss() {
-      super.dismiss();//change of state loss
-    }
-
-    /**
-     * overriden for committing with state loss
-     * @param transaction FragmentTransaction instance
-     * @param tag tag of fragment
-     * @return int state
-     */
-    @Override public final int show(FragmentTransaction transaction, String tag) {
-      return transaction.add(this, tag)
-                        .commit();//change of state loss
-    }
-
-    /**
-     * overriden for committing with state loss
-     * @param manager FragmentManager instance
-     * @param tag tag of fragment
-     */
-    @Override public final void show(FragmentManager manager, String tag) {
-      FragmentTransaction trans = manager.beginTransaction();
-      show(trans, tag);
-    }
+  /**
+   * overriden for committing with state loss
+   * @param manager FragmentManager instance
+   * @param tag tag of fragment
+   */
+  @Override public final void show(FragmentManager manager, String tag) {
+    FragmentTransaction trans = manager.beginTransaction();
+    show(trans, tag);
+  }
 }

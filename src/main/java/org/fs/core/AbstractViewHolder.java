@@ -24,38 +24,47 @@ import java.io.StringWriter;
 
 public abstract class AbstractViewHolder<D> {
 
-    protected       D    data;
-    protected final View view;
+  protected       D    data;
+  protected final View view;
 
-    public AbstractViewHolder(@NonNull View view) {
-      this.view = view;
-      //old style list views require this, some how
-      view.setTag(this);
+  public AbstractViewHolder(@NonNull View view) {
+    this.view = view;
+    //old style list views require this, some how
+    view.setTag(this);
+  }
+
+  protected void log(String str) {
+    log(Log.DEBUG, str);
+  }
+
+  protected void log(Exception e) {
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter printWriter  = new PrintWriter(stringWriter);
+    e.printStackTrace(printWriter);
+    log(Log.ERROR, stringWriter.toString());
+  }
+
+  protected void log(int lv, String str) {
+    if(isLogEnabled()) {
+      Log.println(lv, getClassTag(), str);
     }
+  }
 
-    protected void log(String str) {
-      log(Log.DEBUG, str);
-    }
+  /**
+   *
+   * @return View instance of this holder pointing to
+   */
+  public final View getView() {
+    return view;
+  }
 
-    protected void log(Exception e) {
-      StringWriter stringWriter = new StringWriter();
-      PrintWriter printWriter  = new PrintWriter(stringWriter);
-      e.printStackTrace(printWriter);
-      log(Log.ERROR, stringWriter.toString());
-    }
+  protected abstract String   getClassTag();
+  protected abstract boolean  isLogEnabled();
 
-    protected void log(int lv, String str) {
-      if(isLogEnabled()) {
-        Log.println(lv, getClassTag(), str);
-      }
-    }
-
-    public final View getView() {
-      return view;
-    }
-
-    protected abstract String   getClassTag();
-    protected abstract boolean  isLogEnabled();
-    protected abstract void     onBindView(D data);
+  /**
+   *
+   * @param data D type of object this ViewHolder is binding to
+   */
+  public    abstract void     onBindView(D data);
 
 }

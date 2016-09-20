@@ -27,68 +27,68 @@ import java.util.List;
 
 public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
 
-    protected List<D> dataSet = null;
+  protected List<D> dataSet = null;
 
-    public AbstractPagerAdapter(FragmentManager fragmentManager, List<D> dataSet) {
-        super(fragmentManager);
-        this.dataSet = dataSet;
+  public AbstractPagerAdapter(FragmentManager fragmentManager, List<D> dataSet) {
+      super(fragmentManager);
+      this.dataSet = dataSet;
+  }
+
+  protected abstract String   getClassTag();
+  protected abstract boolean  isLogEnabled();
+  protected abstract Fragment onBind(int position, D element);
+
+  protected final void log(final String str) {
+    log(Log.DEBUG, str);
+  }
+
+  @Override public final Fragment getItem(int position) {
+    return onBind(position, getItemAtIndex(position));
+  }
+
+  protected final void log(Exception e) {
+    StringWriter strWriter = new StringWriter();
+    PrintWriter prtWriter = new PrintWriter(strWriter);
+    e.printStackTrace(prtWriter);
+    log(Log.ERROR, strWriter.toString());
+  }
+
+  protected final void log(final int lv, final String str) {
+    if(isLogEnabled()) {
+      Log.println(lv, getClassTag(), str);
     }
+  }
 
-    protected abstract String   getClassTag();
-    protected abstract boolean  isLogEnabled();
-    protected abstract Fragment onBind(int position, D element);
-
-    protected final void log(final String str) {
-      log(Log.DEBUG, str);
-    }
-
-    @Override public final Fragment getItem(int position) {
-      return onBind(position, getItemAtIndex(position));
-    }
-
-    protected final void log(Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter prtWriter = new PrintWriter(strWriter);
-      e.printStackTrace(prtWriter);
-      log(Log.ERROR, strWriter.toString());
-    }
-
-    protected final void log(final int lv, final String str) {
-      if(isLogEnabled()) {
-        Log.println(lv, getClassTag(), str);
+  public void appendData(@NonNull D data, boolean front) {
+    if(dataSet != null) {
+      if (front) {
+        dataSet.add(0, data);
+      } else {
+        dataSet.add(data);
       }
     }
+  }
 
-    public void appendData(@NonNull D data, boolean front) {
-      if(dataSet != null) {
-        if (front) {
-          dataSet.add(0, data);
-        } else {
-          dataSet.add(data);
-        }
+  public void appendData(@NonNull List<D> data, boolean front) {
+    if(dataSet != null) {
+      if(front) {
+        dataSet.addAll(0, data);
+      } else {
+        dataSet.addAll(data);
       }
     }
+  }
 
-    public void appendData(@NonNull List<D> data, boolean front) {
-      if(dataSet != null) {
-        if(front) {
-          dataSet.addAll(0, data);
-        } else {
-          dataSet.addAll(data);
-        }
-      }
-    }
+  @Override public final int getCount() {
+    return dataSet == null
+        ? 0
+        : dataSet.size();
+  }
 
-    @Override public final int getCount() {
-      return dataSet == null
-          ? 0
-          : dataSet.size();
-    }
-
-    protected final D getItemAtIndex(int index) {
-      int limit = dataSet.size();
-      if(index < 0 || index >= limit || limit == 0)
-        return null;
-      return dataSet.get(index);
-    }
+  protected final D getItemAtIndex(int index) {
+    int limit = dataSet.size();
+    if(index < 0 || index >= limit || limit == 0)
+      return null;
+    return dataSet.get(index);
+  }
 }

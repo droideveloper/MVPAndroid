@@ -17,23 +17,23 @@ package org.fs.common;
 
 public interface IPresenter {
 
-    /**
-     * context callback onCreate
-     */
-    void onCreate();
+  /**
+   * context callback onCreate
+   */
+  void onCreate();
 
-    /**
-     * context callback onStart
-     */
-    void onStart();
+  /**
+   * context callback onStart
+   */
+  void onStart();
 
-    /**
-     * context callback onPause
-     */
-    void onStop();
+  /**
+   * context callback onPause
+   */
+  void onStop();
 
-    /**
-     * context callback onDestroy
-     */
-    void onDestroy();
+  /**
+   * context callback onDestroy
+   */
+  void onDestroy();
 }

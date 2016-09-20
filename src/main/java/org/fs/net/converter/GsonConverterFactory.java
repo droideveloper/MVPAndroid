@@ -20,41 +20,42 @@ import retrofit2.Retrofit;
  */
 public class GsonConverterFactory extends Converter.Factory {
 
-    private final Gson mGson;
 
-    /**
-     * Create GsonConverterFactory instance that uses user specified Gson object
-     * @param mGson Gson object instance that you configured with your needs
-     * @return returns GsonConverterFactory that will be using your specific Gson object instance
-     */
-    public static GsonConverterFactory createWithGson(Gson mGson) {
-        return new GsonConverterFactory(mGson);
-    }
+  private final Gson mGson;
 
-    /**
-     * Create GsonConverterFactory instance that uses new Gson object
-     * @return returns GsonConverterFactory that will be using new Gson object instance
-     */
-    public static GsonConverterFactory createWithDefaultGson() {
-        return new GsonConverterFactory(new Gson());
-    }
+  /**
+   * Create GsonConverterFactory instance that uses user specified Gson object
+   * @param mGson Gson object instance that you configured with your needs
+   * @return returns GsonConverterFactory that will be using your specific Gson object instance
+   */
+  public static GsonConverterFactory createWithGson(Gson mGson) {
+    return new GsonConverterFactory(mGson);
+  }
 
-    private GsonConverterFactory(final Gson mGson) {
-        PreconditionUtility.checkNotNull(mGson, "gson instance is null");
-        this.mGson = mGson;
-    }
+  /**
+   * Create GsonConverterFactory instance that uses new Gson object
+   * @return returns GsonConverterFactory that will be using new Gson object instance
+   */
+  public static GsonConverterFactory createWithDefaultGson() {
+    return new GsonConverterFactory(new Gson());
+  }
 
-    @Override public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-        TypeAdapter<?> typeAdapter = typeAdapterFromType(type);
-        return new GsonResponseBodyConverter<>(typeAdapter, mGson);
-    }
+  private GsonConverterFactory(final Gson mGson) {
+    PreconditionUtility.checkNotNull(mGson, "gson instance is null");
+    this.mGson = mGson;
+  }
 
-    @Override public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
-        TypeAdapter<?> typeAdapter = typeAdapterFromType(type);
-        return new GsonRequestBodyConverter<>(typeAdapter, mGson);
-    }
+  @Override public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+    TypeAdapter<?> typeAdapter = typeAdapterFromType(type);
+    return new GsonResponseBodyConverter<>(typeAdapter, mGson);
+  }
 
-    private TypeAdapter<?> typeAdapterFromType(Type type) {
-        return mGson.getAdapter(TypeToken.get(type));
-    }
+  @Override public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+    TypeAdapter<?> typeAdapter = typeAdapterFromType(type);
+    return new GsonRequestBodyConverter<>(typeAdapter, mGson);
+  }
+
+  private TypeAdapter<?> typeAdapterFromType(Type type) {
+    return mGson.getAdapter(TypeToken.get(type));
+  }
 }

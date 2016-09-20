@@ -28,48 +28,48 @@ import java.sql.SQLException;
 
 public abstract class AbstractOrmliteHelper extends OrmLiteSqliteOpenHelper {
 
-    public AbstractOrmliteHelper(Context context, String dbName, int dbVersion, int dbConfig) {
-      super(context, dbName, null, dbVersion, dbConfig);
+  public AbstractOrmliteHelper(Context context, String dbName, int dbVersion, int dbConfig) {
+    super(context, dbName, null, dbVersion, dbConfig);
+  }
+
+
+  @Override public final void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
+    try {
+      createTables(connectionSource);
+    } catch (SQLException e) {
+      log(e);
     }
+  }
 
-
-    @Override public final void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-      try {
-        createTables(connectionSource);
-      } catch (SQLException e) {
-        log(e);
-      }
+  @Override public final void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+    try {
+      dropTables(connectionSource);
+      onCreate(database, connectionSource);
+    } catch (SQLException e) {
+      log(e);
     }
+  }
 
-    @Override public final void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-      try {
-        dropTables(connectionSource);
-        onCreate(database, connectionSource);
-      } catch (SQLException e) {
-        log(e);
-      }
+  protected abstract void     createTables(ConnectionSource cs) throws SQLException;
+  protected abstract void     dropTables(ConnectionSource cs) throws SQLException;
+  protected abstract String   getClassTag();
+  protected abstract boolean  isLogEnabled();
+
+
+  protected void log(final String str) {
+    log(Log.DEBUG, str);
+  }
+
+  protected void log(Exception e) {
+    StringWriter strWriter = new StringWriter();
+    PrintWriter prtWriter = new PrintWriter(strWriter);
+    e.printStackTrace(prtWriter);
+    log(Log.ERROR, strWriter.toString());
+  }
+
+  protected void log(final int lv, final String str) {
+    if(isLogEnabled()) {
+      Log.println(lv, getClassTag(), str);
     }
-
-    protected abstract void     createTables(ConnectionSource cs) throws SQLException;
-    protected abstract void     dropTables(ConnectionSource cs) throws SQLException;
-    protected abstract String   getClassTag();
-    protected abstract boolean  isLogEnabled();
-
-
-    protected void log(final String str) {
-      log(Log.DEBUG, str);
-    }
-
-    protected void log(Exception e) {
-      StringWriter strWriter = new StringWriter();
-      PrintWriter prtWriter = new PrintWriter(strWriter);
-      e.printStackTrace(prtWriter);
-      log(Log.ERROR, strWriter.toString());
-    }
-
-    protected void log(final int lv, final String str) {
-      if(isLogEnabled()) {
-        Log.println(lv, getClassTag(), str);
-      }
-    }
+  }
 }
