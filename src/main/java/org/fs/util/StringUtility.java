@@ -19,6 +19,8 @@ import org.fs.exception.AndroidException;
 
 public final class StringUtility {
 
+  public final static String EMPTY = "";
+
   private StringUtility() {
     throw new AndroidException("no instance for you!");
   }
