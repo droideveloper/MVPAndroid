@@ -15,11 +15,16 @@
  */
 package org.fs.util;
 
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import org.fs.exception.AndroidException;
 
 public final class StringUtility {
 
   public final static String EMPTY = "";
+  private final static char[] hexBuffers = "0123456789ABCDEF".toCharArray();
+
 
   private StringUtility() {
     throw new AndroidException("no instance for you!");
@@ -68,5 +73,38 @@ public final class StringUtility {
     return !isNullOrEmpty(str)
         && str.contains("<")
         && str.contains("/>");
+  }
+
+  /**
+   *
+   * @param sink bytes to convert hex String
+   * @return String representation of byte array
+   */
+  public static String toHexString(byte[] sink) {
+    PreconditionUtility.checkNotNull(sink, "sink is null.");
+    char[] hexChars = new char[sink.length * 2];
+    for (int i = 0, z = sink.length; i < z; i++) {
+      int v = sink[i] & 0xFF;
+      hexChars[i * 2] = hexBuffers[v >>> 4];
+      hexChars[i * 2 + 1] = hexBuffers[v & 0x0F];
+    }
+    return new String(hexChars);
+  }
+
+  /**
+   *
+   * @param str String to convert hex of sha1
+   * @return sha1 of hex as string
+   */
+  public static String toSha1Hex(String str) {
+    PreconditionUtility.checkNotNull(str, "str is null or empty.");
+    try {
+      MessageDigest md = MessageDigest.getInstance("SHA-1");
+      md.update(str.getBytes(Charset.forName("utf-8")), 0, str.length());
+      byte[] buffer = md.digest();
+      return toHexString(buffer);
+    } catch (NoSuchAlgorithmException errorAlgorithm) {
+      throw new AndroidException(errorAlgorithm);
+    }
   }
 }
