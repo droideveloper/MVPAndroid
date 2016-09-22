@@ -1,6 +1,3 @@
-package org.fs.net;
-
-
 /*
  * Copyright (C) 2016 Square, Inc.
  *
@@ -16,6 +13,7 @@ package org.fs.net;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.fs.net;
 
 import java.lang.reflect.Type;
 
