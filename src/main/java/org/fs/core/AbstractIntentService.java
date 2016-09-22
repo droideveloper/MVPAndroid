@@ -31,7 +31,6 @@ public abstract class AbstractIntentService<P extends IPresenter> extends Intent
 
   protected abstract String   getClassTag();
   protected abstract boolean  isLogEnabled();
-  protected abstract P        providePresenter();
 
   protected void log(final String str) {
     log(Log.DEBUG, str);
