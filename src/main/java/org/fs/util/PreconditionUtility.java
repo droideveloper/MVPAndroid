@@ -24,14 +24,23 @@ public final class PreconditionUtility {
   }
 
   /**
-   * ensures string empty or null
-   * @param t
-   * @param errorMessage
-   * @param <T>
+   * ensures not empty or null
+   * @param t t object
+   * @param errorMessage message to be shown
+   * @param <T> type of t
    */
   public static <T> void checkNotNull(T t, String errorMessage) {
     if(StringUtility.isNullOrEmpty(t)) {
       throw new AndroidException(errorMessage);
     }
+  }
+
+  /**
+   * default error #chckNotNull
+   * @param t t object
+   * @param <T> type of t
+   */
+  public static <T> void checkNotNull(T t) {
+    checkNotNull(t, "object is null or empty.");
   }
 }
