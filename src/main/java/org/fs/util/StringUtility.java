@@ -23,6 +23,7 @@ import org.fs.exception.AndroidException;
 public final class StringUtility {
 
   public final static String EMPTY = "";
+  public final static String WHITE_SPACE = " ";
   private final static char[] hexBuffers = "0123456789ABCDEF".toCharArray();
 
 

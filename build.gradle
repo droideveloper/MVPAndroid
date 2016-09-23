@@ -11,6 +11,13 @@ android {
     versionName "1.0"
   }
 
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
   lintOptions {
     abortOnError false
   }
@@ -30,12 +37,10 @@ dependencies {
   compile 'com.google.code.gson:gson:2.6.2'
   // this is http restful client from Square, Retrofit.
   compile 'com.squareup.retrofit2:retrofit:2.1.0'
-  //loging response and request for restApiCall
+  //logging response and request for restApiCall
   compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
   //RxJava and RxAndroid
   compile 'io.reactivex:rxjava:1.1.6'
   compile 'io.reactivex:rxandroid:1.2.1'
-  //dependency injection Dagger2
-  compile 'com.google.dagger:dagger:2.5'
   compile 'com.j256.ormlite:ormlite-android:4.48'
 }
