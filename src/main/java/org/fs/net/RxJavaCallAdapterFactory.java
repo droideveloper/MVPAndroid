@@ -20,7 +20,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Response;
@@ -30,7 +29,6 @@ import rx.Producer;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.exceptions.Exceptions;
 import rx.functions.Func1;
 
 /**
@@ -173,16 +171,14 @@ public final class RxJavaCallAdapterFactory extends CallAdapter.Factory {
             subscriber.onNext(response);
         }
       } catch (Throwable t) {
-        Exceptions.throwIfFatal(t);
+        //Exceptions.throwIfFatal(t);
         if (!subscriber.isUnsubscribed()) {
             subscriber.onError(t);
         }
-        //return; removed because even if it fails we want it to go to completed block because
-        //we want to complete it that way
-      }
-
-      if (!subscriber.isUnsubscribed()) {
-        subscriber.onCompleted();
+      } finally {
+        if (!subscriber.isUnsubscribed()) {
+          subscriber.onCompleted();
+        }
       }
     }
 

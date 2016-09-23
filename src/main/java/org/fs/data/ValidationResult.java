@@ -36,6 +36,10 @@ public class ValidationResult<T> {
     return this.validation;
   }
 
+  public final boolean isValid() {
+    return validation == VALID;
+  }
+
   public static <T> ValidationResult<T> invalid() {
     return new ValidationResult<>(null, INVALID);
   }
