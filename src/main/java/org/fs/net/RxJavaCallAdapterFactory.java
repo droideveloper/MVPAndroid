@@ -177,7 +177,8 @@ public final class RxJavaCallAdapterFactory extends CallAdapter.Factory {
         if (!subscriber.isUnsubscribed()) {
             subscriber.onError(t);
         }
-        return;
+        //return; removed because even if it fails we want it to go to completed block because
+        //we want to complete it that way
       }
 
       if (!subscriber.isUnsubscribed()) {
