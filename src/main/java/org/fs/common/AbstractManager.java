@@ -25,7 +25,6 @@ public abstract class AbstractManager {
   protected abstract String  getClassTag();
   protected abstract boolean isLogEnabled();
 
-
   protected void log(final String msg) {
       log(Log.DEBUG, msg);
   }
@@ -36,10 +35,10 @@ public abstract class AbstractManager {
     }
   }
 
-  protected void log(Throwable exp) {
+  protected void log(Throwable error) {
     StringWriter str = new StringWriter(128);
     PrintWriter  ptr = new PrintWriter(str);
-    exp.printStackTrace(ptr);
+    error.printStackTrace(ptr);
     log(Log.ERROR, str.toString());
   }
 }

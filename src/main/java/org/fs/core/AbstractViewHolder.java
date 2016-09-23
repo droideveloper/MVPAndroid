@@ -37,10 +37,10 @@ public abstract class AbstractViewHolder<D> {
     log(Log.DEBUG, str);
   }
 
-  protected void log(Exception e) {
+  protected void log(Throwable error) {
     StringWriter stringWriter = new StringWriter();
-    PrintWriter printWriter  = new PrintWriter(stringWriter);
-    e.printStackTrace(printWriter);
+    PrintWriter  printWriter  = new PrintWriter(stringWriter);
+    error.printStackTrace(printWriter);
     log(Log.ERROR, stringWriter.toString());
   }
 

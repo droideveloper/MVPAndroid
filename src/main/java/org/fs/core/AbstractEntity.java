@@ -62,11 +62,11 @@ public abstract class AbstractEntity implements Parcelable {
     log(Log.DEBUG, str);
   }
 
-  protected void log(Exception e) {
-    StringWriter strWriter = new StringWriter();
-    PrintWriter prtWriter = new PrintWriter(strWriter);
-    e.printStackTrace(prtWriter);
-    log(Log.ERROR, strWriter.toString());
+  protected void log(Throwable error) {
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter  printWriter  = new PrintWriter(stringWriter);
+    error.printStackTrace(printWriter);
+    log(Log.ERROR, stringWriter.toString());
   }
 
   /**

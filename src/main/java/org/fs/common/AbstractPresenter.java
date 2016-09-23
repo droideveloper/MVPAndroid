@@ -36,10 +36,10 @@ public abstract class AbstractPresenter<V extends IView> {
     log(Log.DEBUG, str);
   }
 
-  protected void log(Exception e) {
+  protected void log(Throwable error) {
     StringWriter stringWriter = new StringWriter();
     PrintWriter  printWriter  = new PrintWriter(stringWriter);
-    e.printStackTrace(printWriter);
+    error.printStackTrace(printWriter);
     log(Log.ERROR, stringWriter.toString());
   }
 
