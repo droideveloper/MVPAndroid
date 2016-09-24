@@ -1,5 +1,5 @@
 /*
- * Galleon_Workplace Copyright (C) 2016 Fatih.
+ * Galleon Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
