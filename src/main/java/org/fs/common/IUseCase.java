@@ -23,5 +23,5 @@ public interface IUseCase<T> {
    * turn execute into async executable with help of RxJava
    * @return Observable of T type.
    */
-  Observable<T> executeAsync();
+  Observable<T> asObservable();
 }
