@@ -20,12 +20,6 @@ import rx.Observable;
 public interface IUseCase<T> {
 
   /**
-   * Execute in current thread
-   * @return T as result
-   */
-  T execute();
-
-  /**
    * turn execute into async executable with help of RxJava
    * @return Observable of T type.
    */
