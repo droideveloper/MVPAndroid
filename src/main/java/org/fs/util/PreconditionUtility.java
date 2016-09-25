@@ -43,4 +43,15 @@ public final class PreconditionUtility {
   public static <T> void checkNotNull(T t) {
     checkNotNull(t, "object is null or empty.");
   }
+
+  /**
+   * Checks if condition is met or not
+   * @param condition condition to check
+   * @param errorMessage error string for stack trace
+   */
+  public static void throwIfConditionFails(boolean condition, String errorMessage) {
+    if (!condition) {
+      throw new AndroidException(errorMessage);
+    }
+  }
 }

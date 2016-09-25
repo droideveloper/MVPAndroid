@@ -17,6 +17,7 @@ package org.fs.util;
 
 import java.util.Locale;
 import org.fs.exception.AndroidException;
+import rx.functions.Action0;
 import rx.functions.Func0;
 import rx.functions.Func1;
 
@@ -36,5 +37,9 @@ public final class InvokeUtility {
   public static <T, P> T invoke(Func1<P, T> func, P p) {
     PreconditionUtility.checkNotNull(func);
     return func.call(p);
+  }
+
+  public static void invoke(Action0 act) {
+    act.call();
   }
 }

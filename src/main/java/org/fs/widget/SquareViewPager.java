@@ -38,7 +38,7 @@ public class SquareViewPager extends ViewPager {
     int width = MeasureSpec.getSize(widthMeasureSpec);
     int height = MeasureSpec.getSize(heightMeasureSpec);
     //simple way of creating square to min of width or height that user provides
-    int minimum = Math.min(width, height);
+    int minimum = Math.max(width, height);
     setMeasuredDimension(minimum, minimum);
   }
 
