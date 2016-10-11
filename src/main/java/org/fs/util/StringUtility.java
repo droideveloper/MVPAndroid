@@ -15,9 +15,8 @@
  */
 package org.fs.util;
 
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 import org.fs.exception.AndroidException;
 
 public final class StringUtility {
@@ -83,13 +82,13 @@ public final class StringUtility {
    */
   public static String toHexString(byte[] sink) {
     PreconditionUtility.checkNotNull(sink, "sink is null.");
-    char[] hexChars = new char[sink.length * 2];
+    StringBuilder strBuffer = new StringBuilder();
     for (int i = 0, z = sink.length; i < z; i++) {
-      int v = sink[i] & 0xFF;
-      hexChars[i * 2] = hexBuffers[v >>> 4];
-      hexChars[i * 2 + 1] = hexBuffers[v & 0x0F];
+      String hex = String.format(Locale.ENGLISH, "%02X", (sink[i] & 0xFF));
+      strBuffer.append(hex);
     }
-    return new String(hexChars);
+    String hashStr = strBuffer.toString();
+    return hashStr.toUpperCase(Locale.ENGLISH);
   }
 
   /**
@@ -101,10 +100,11 @@ public final class StringUtility {
     PreconditionUtility.checkNotNull(str, "str is null or empty.");
     try {
       MessageDigest md = MessageDigest.getInstance("SHA-1");
-      md.update(str.getBytes(Charset.forName("utf-8")), 0, str.length());
-      byte[] buffer = md.digest();
-      return toHexString(buffer);
-    } catch (NoSuchAlgorithmException errorAlgorithm) {
+      byte[] source = str.getBytes("UTF-8");
+      md.update(source, 0, source.length);
+      byte[] sink = md.digest();
+      return toHexString(sink);
+    } catch (Exception errorAlgorithm) {
       throw new AndroidException(errorAlgorithm);
     }
   }
@@ -113,10 +113,11 @@ public final class StringUtility {
     PreconditionUtility.checkNotNull(str, "str is null or empty");
     try {
       MessageDigest md5 = MessageDigest.getInstance("MD5");
-      md5.update(str.getBytes(Charset.forName("utf-8")), 0, str.length());
-      byte[] buffer = md5.digest();
-      return toHexString(buffer);
-    } catch (NoSuchAlgorithmException notFoundError) {
+      byte[] source = str.getBytes("UTF-8");
+      md5.update(source, 0, source.length);
+      byte[] sink = md5.digest();
+      return toHexString(sink);
+    } catch (Exception notFoundError) {
       throw new AndroidException(notFoundError);
     }
   }
