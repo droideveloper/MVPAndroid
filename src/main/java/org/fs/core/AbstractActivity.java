@@ -15,6 +15,8 @@
  */
 package org.fs.core;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -25,9 +27,21 @@ import java.io.StringWriter;
 
 public abstract class AbstractActivity<P extends IPresenter> extends AppCompatActivity {
 
+  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    overridePendingTransition(R.anim.translate_right_in, R.anim.scale_out);
+  }
+
+  @Override public void finish() {
+    super.finish();
+    overridePendingTransition(R.anim.translate_right_out, R.anim.scale_in);
+  }
+
   /**
    * P is in here is definition not that is required in this abstraction
    */
+
+
 
   protected abstract String   getClassTag();
   protected abstract boolean  isLogEnabled();
