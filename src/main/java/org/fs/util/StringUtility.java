@@ -108,4 +108,16 @@ public final class StringUtility {
       throw new AndroidException(errorAlgorithm);
     }
   }
+
+  public static String toMd5Hex(String str) {
+    PreconditionUtility.checkNotNull(str, "str is null or empty");
+    try {
+      MessageDigest md5 = MessageDigest.getInstance("MD5");
+      md5.update(str.getBytes(Charset.forName("utf-8")), 0, str.length());
+      byte[] buffer = md5.digest();
+      return toHexString(buffer);
+    } catch (NoSuchAlgorithmException notFoundError) {
+      throw new AndroidException(notFoundError);
+    }
+  }
 }
