@@ -19,5 +19,4 @@ public interface IPropertyChangedListener {
   void notifyItemsRemoved(int index, int size);
   void notifyItemsInserted(int index, int size);
   void notifyItemsChanged(int index, int size);
-  void notifyItemsMoved(int index, int toIndex, int size);
 }
