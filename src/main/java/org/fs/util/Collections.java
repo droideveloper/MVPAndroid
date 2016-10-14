@@ -15,10 +15,10 @@
  */
 package org.fs.util;
 
-import org.fs.exception.AndroidException;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import org.fs.exception.AndroidException;
 
 public final class Collections {
 
@@ -44,6 +44,10 @@ public final class Collections {
       }
     }
     return result;
+  }
+
+  public static <T> int indexOfSubList(List<T> source, Collection<?> search) {
+    return java.util.Collections.indexOfSubList(source, (List<?>) search);
   }
 
   /**
