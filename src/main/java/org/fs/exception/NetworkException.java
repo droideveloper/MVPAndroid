@@ -17,15 +17,15 @@ package org.fs.exception;
 
 public class NetworkException extends RuntimeException {
 
-    public NetworkException(Throwable throwable) {
-      super(throwable);
-    }
+  public NetworkException(Throwable throwable) {
+    super(throwable);
+  }
 
-    public NetworkException(String detailMessage) {
-      super(detailMessage);
-    }
+  public NetworkException(String detailMessage) {
+    super(detailMessage);
+  }
 
-    public NetworkException() {
-      super();
-    }
+  public NetworkException() {
+    super();
+  }
 }

@@ -17,12 +17,11 @@ package org.fs.anim;
 
 import android.view.animation.Interpolator;
 
-public class CoreInterpolator implements Interpolator {
+public class FancyInterpolator implements Interpolator {
 
-    //(t - 1)^5 + 1 is the value of time position
-
-    @Override public float getInterpolation(float t) {
-      t -= 1.0f;
-      return t * t * t * t * t  + 1.0f;
-    }
+  //(t - 1)^5 + 1 is the value of time position
+  @Override public float getInterpolation(float t) {
+    t -= 1.0f;
+    return t * t * t * t * t  + 1.0f;
+  }
 }

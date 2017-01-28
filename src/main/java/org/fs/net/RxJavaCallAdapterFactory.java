@@ -29,7 +29,6 @@ import rx.Producer;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Func1;
 
 /**
  * A {@linkplain CallAdapter.Factory call adapter} which uses RxJava for creating observables.
@@ -228,7 +227,7 @@ public final class RxJavaCallAdapterFactory extends CallAdapter.Factory {
 
     @Override public <R> Observable<R> adapt(Call<R> call) {
       Observable<R> observable = Observable.create(new CallOnSubscribe<>(call)) //
-              .lift(OperatorMapResponseToBodyOrError.<R>instance());
+              .lift(OperatorMapResponseToBodyOrError.instance());
       if (scheduler != null) {
         return observable.subscribeOn(scheduler);
       }
@@ -251,15 +250,8 @@ public final class RxJavaCallAdapterFactory extends CallAdapter.Factory {
 
     @Override public <R> Observable<Result<R>> adapt(Call<R> call) {
       Observable<Result<R>> observable = Observable.create(new CallOnSubscribe<>(call)) //
-              .map(new Func1<Response<R>, Result<R>>() {
-                  @Override public Result<R> call(Response<R> response) {
-                      return Result.response(response);
-                  }
-              }).onErrorReturn(new Func1<Throwable, Result<R>>() {
-                  @Override public Result<R> call(Throwable throwable) {
-                      return Result.error(throwable);
-                  }
-              });
+        .map(Result::response)
+        .onErrorReturn(Result::error);
       if (scheduler != null) {
         return observable.subscribeOn(scheduler);
       }

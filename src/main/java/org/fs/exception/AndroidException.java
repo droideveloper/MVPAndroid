@@ -17,15 +17,15 @@ package org.fs.exception;
 
 public class AndroidException extends RuntimeException {
 
-    public AndroidException() {
-      super();
-    }
+  public AndroidException() {
+    super();
+  }
 
-    public AndroidException(Throwable throwable) {
-      super(throwable);
-    }
+  public AndroidException(Throwable throwable) {
+    super(throwable);
+  }
 
-    public AndroidException(String detailMessage) {
-      super(detailMessage);
-    }
+  public AndroidException(String detailMessage) {
+    super(detailMessage);
+  }
 }
