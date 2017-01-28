@@ -22,19 +22,47 @@ import java.io.StringWriter;
 
 public abstract class AbstractManager {
 
+  /**
+   * Provide tag for concrete class instance
+   *
+   * @return String
+   */
   protected abstract String  getClassTag();
+
+  /**
+   * Provide boolean for concrete class instance
+   * should be used for BuildConfig.DEBUG
+   *
+   * @return Boolean
+   */
   protected abstract boolean isLogEnabled();
 
+  /**
+   * Logging message
+   *
+   * @param msg String
+   */
   protected void log(final String msg) {
       log(Log.DEBUG, msg);
   }
 
+  /**
+   * Logging message with Level
+   *
+   * @param lv Integer
+   * @param msg String
+   */
   protected void log(final int lv, final String msg) {
     if (isLogEnabled()) {
       Log.println(lv, getClassTag(), msg);
     }
   }
 
+  /**
+   * Logging error
+   *
+   * @param error Throwable
+   */
   protected void log(Throwable error) {
     StringWriter str = new StringWriter(128);
     PrintWriter  ptr = new PrintWriter(str);
