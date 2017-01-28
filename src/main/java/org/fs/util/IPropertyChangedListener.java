@@ -16,7 +16,28 @@
 package org.fs.util;
 
 public interface IPropertyChangedListener {
+
+  /**
+   * remove callback
+   *
+   * @param index index
+   * @param size size
+   */
   void notifyItemsRemoved(int index, int size);
+
+  /**
+   * insert callback
+   *
+   * @param index index
+   * @param size size
+   */
   void notifyItemsInserted(int index, int size);
+
+  /**
+   * change callback
+   *
+   * @param index index
+   * @param size size
+   */
   void notifyItemsChanged(int index, int size);
 }

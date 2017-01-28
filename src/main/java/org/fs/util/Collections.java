@@ -46,6 +46,14 @@ public final class Collections {
     return result;
   }
 
+  /**
+   * try to return index of a list inside another list
+   *
+   * @param source source for search in
+   * @param search item to be searched
+   * @param <T> type of items
+   * @return -1 if nothing found else index
+   */
   public static <T> int indexOfSubList(List<T> source, Collection<?> search) {
     return java.util.Collections.indexOfSubList(source, (List<?>) search);
   }

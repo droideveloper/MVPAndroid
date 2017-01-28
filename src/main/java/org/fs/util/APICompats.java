@@ -23,6 +23,12 @@ public final class APICompats {
     throw new IllegalArgumentException("you can not have instance of this object");
   }
 
+  /**
+   * checks if sdk is valid
+   *
+   * @param requiredSdkVersion sdk int fdr check
+   * @return Boolean
+   */
   public static boolean isApiAvailable(int requiredSdkVersion) {
     return Build.VERSION.SDK_INT >= requiredSdkVersion;
   }

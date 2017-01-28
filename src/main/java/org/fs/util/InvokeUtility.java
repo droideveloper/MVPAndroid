@@ -29,16 +29,37 @@ public final class InvokeUtility {
     );
   }
 
+  /**
+   * Invoke void param func where it returns T
+   *
+   * @param func function
+   * @param <T> type of return
+   * @return T instance
+   */
   public static <T> T invoke(Func0<T> func) {
     PreconditionUtility.checkNotNull(func);
     return func.call();
   }
 
+  /**
+   * Invoke P type param func where it returns T
+   *
+   * @param func function
+   * @param p type of param
+   * @param <T> type of return
+   * @param <P>  type of param
+   * @return T instance
+   */
   public static <T, P> T invoke(Func1<P, T> func, P p) {
     PreconditionUtility.checkNotNull(func);
     return func.call(p);
   }
 
+  /**
+   * Invoke void param action where it returns void
+   *
+   * @param act action
+   */
   public static void invoke(Action0 act) {
     act.call();
   }

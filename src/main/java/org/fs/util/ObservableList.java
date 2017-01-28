@@ -21,12 +21,17 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java8.util.stream.StreamSupport;
 
 public class ObservableList<T> implements List<T> {
 
   private final List<T> itemStore = new ArrayList<>();
   private final List<IPropertyChangedListener> listeners = new ArrayList<>();
 
+  /**
+   * Register Observer for this list
+   * @param listener callback
+   */
   public final void registerPropertyChangedListener(IPropertyChangedListener listener) {
     if (listener != null) {
       boolean alreadyRegistered = listeners.contains(listener);
@@ -36,6 +41,10 @@ public class ObservableList<T> implements List<T> {
     }
   }
 
+  /**
+   * Unregister Observer for this list
+   * @param listener callback
+   */
   public final void unregisterPropertyChangedListener(IPropertyChangedListener listener) {
     if (listener != null) {
       boolean alreadyRegistered = listeners.contains(listener);
@@ -44,6 +53,7 @@ public class ObservableList<T> implements List<T> {
       }
     }
   }
+
 
   @Override public int size() {
     synchronized (itemStore) {
@@ -86,11 +96,9 @@ public class ObservableList<T> implements List<T> {
       boolean success = itemStore.add(t);
       int index = itemStore.indexOf(t);
       if (!listeners.isEmpty()) {
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null && success) {
-            listener.notifyItemsInserted(index, 1);
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null && success)
+            .forEach(listener -> listener.notifyItemsInserted(index, 1));
       }
       return success;
     }
@@ -101,11 +109,9 @@ public class ObservableList<T> implements List<T> {
       int index = itemStore.indexOf(o);
       boolean success = itemStore.remove(o);
       if (!listeners.isEmpty()) {
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null && success) {
-            listener.notifyItemsRemoved(index, 1);
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null && success)
+            .forEach(listener -> listener.notifyItemsRemoved(index, 1));
       }
       return success;
     }
@@ -123,11 +129,9 @@ public class ObservableList<T> implements List<T> {
       if (!listeners.isEmpty()) {
         int index = itemStore.size() - c.size();
         int size = c.size();
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null && success) {
-            listener.notifyItemsInserted(index, size);
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null && success)
+            .forEach(listener ->  listener.notifyItemsInserted(index, size));
       }
       return success;
     }
@@ -138,11 +142,9 @@ public class ObservableList<T> implements List<T> {
       boolean success = itemStore.addAll(c);
       if (!listeners.isEmpty()) {
         int size = c.size();
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null && success) {
-            listener.notifyItemsInserted(index, size);
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null && success)
+            .forEach(listener -> listener.notifyItemsInserted(index, size));
       }
       return success;
     }
@@ -154,11 +156,9 @@ public class ObservableList<T> implements List<T> {
       int size = c.size();
       boolean success = itemStore.removeAll(c);
       if (!listeners.isEmpty()) {
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null && success) {
-            listener.notifyItemsRemoved(index, size);
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null && success)
+            .forEach(listener -> listener.notifyItemsInserted(index, size));
       }
       return success;
     }
@@ -171,12 +171,12 @@ public class ObservableList<T> implements List<T> {
       int total = itemStore.size();
       boolean success = itemStore.retainAll(c);
       if (!listeners.isEmpty()) {
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null && success) {
-            listener.notifyItemsRemoved(0, index);
-            listener.notifyItemsRemoved(index + size, total - (index + size));
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null && success)
+            .forEach(listener -> {
+              listener.notifyItemsRemoved(0, index);
+              listener.notifyItemsRemoved(index + size, total - (index + size));
+            });
       }
       return success;
     }
@@ -187,11 +187,9 @@ public class ObservableList<T> implements List<T> {
       int size = itemStore.size();
       itemStore.clear();
       if (!listeners.isEmpty()) {
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null) {
-            listener.notifyItemsRemoved(0, size);
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null)
+            .forEach(listener ->  listener.notifyItemsRemoved(0, size));
       }
     }
   }
@@ -218,11 +216,9 @@ public class ObservableList<T> implements List<T> {
     synchronized (itemStore) {
       T set = itemStore.set(index, element);
       if (!listeners.isEmpty()) {
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null) {
-            listener.notifyItemsChanged(index, 1);
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null)
+            .forEach(listener ->  listener.notifyItemsChanged(index, 1));
       }
       return set;
     }
@@ -232,11 +228,9 @@ public class ObservableList<T> implements List<T> {
     synchronized (itemStore) {
       itemStore.add(index, element);
       if (!listeners.isEmpty()) {
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null) {
-            listener.notifyItemsInserted(index, 1);
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null)
+            .forEach(listener -> listener.notifyItemsInserted(index, 0));
       }
     }
   }
@@ -245,11 +239,9 @@ public class ObservableList<T> implements List<T> {
     synchronized (itemStore) {
       T removed = itemStore.remove(index);
       if (!listeners.isEmpty()) {
-        for (IPropertyChangedListener listener : listeners) {
-          if (listener != null) {
-            listener.notifyItemsRemoved(index, 1);
-          }
-        }
+        StreamSupport.stream(listeners)
+            .filter(listener -> listener != null)
+            .forEach(listener -> listener.notifyItemsRemoved(index, 1));
       }
       return removed;
     }
