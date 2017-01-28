@@ -29,6 +29,7 @@ public final class ViewUtility {
 
   /**
    * Cast a View instance into directed parent kinda casting lazy
+   *
    * @param view View to be casted for that type
    * @param <T> T is the final type we are looking for
    * @return T type of View
@@ -39,6 +40,7 @@ public final class ViewUtility {
 
   /**
    * Deeper call of view to find view inside of its parent
+   *
    * @param view View we search in
    * @param viewID id of view we will be searching
    * @param <T> filed of the view we assing it in type of T
@@ -51,6 +53,7 @@ public final class ViewUtility {
   /**
    * Extract view for field casting lazy and ugly way but if you know the type of view than this is better for
    * less boiler plate code
+   *
    * @param activity activity instance
    * @param viewID view id
    * @param <T> type we will return
@@ -59,6 +62,4 @@ public final class ViewUtility {
   public static <T> T findViewById(Activity activity, @IdRes int viewID) {
     return findViewById(activity.findViewById(android.R.id.content), viewID);
   }
-
-
 }

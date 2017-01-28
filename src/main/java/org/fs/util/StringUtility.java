@@ -33,9 +33,10 @@ public final class StringUtility {
   /**
    * Object is null if object is String instance then checks extra for empty String control..
    * can pass any type.
-   * @param object
-   * @param <T>
-   * @return
+   *
+   * @param object object
+   * @param <T> type T
+   * @return Boolean
    */
   public static <T> boolean isNullOrEmpty(T object) {
     if(object == null)
@@ -52,8 +53,9 @@ public final class StringUtility {
    * copy it from there because since it is in android package asked for
    * androidTest so it's here with another implementation of that method
    * what they do is same nothing extra or special
-   * @param str
-   * @return
+   *
+   * @param str String
+   * @return Boolean
    */
   public static boolean isEmpty(CharSequence str) {
     if (str == null || str.length() == 0)
@@ -64,8 +66,9 @@ public final class StringUtility {
 
   /**
    * provides if this String instance contains start and end tags of Html
-   * @param str
-   * @return
+   *
+   * @param str String
+   * @return Boolean
    */
   public static boolean hasHtmlTag(final String str) {
     //we assume that if it contains html start and end tag
@@ -76,9 +79,10 @@ public final class StringUtility {
   }
 
   /**
+   * toHex for md5 hashing
    *
    * @param sink bytes to convert hex String
-   * @return String representation of byte array
+   * @return String
    */
   public static String toHexString(byte[] sink) {
     PreconditionUtility.checkNotNull(sink, "sink is null.");
@@ -92,6 +96,7 @@ public final class StringUtility {
   }
 
   /**
+   *Sha1 hex
    *
    * @param str String to convert hex of sha1
    * @return sha1 of hex as string

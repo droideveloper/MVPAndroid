@@ -25,6 +25,7 @@ public final class PreconditionUtility {
 
   /**
    * ensures not empty or null
+   *
    * @param t t object
    * @param errorMessage message to be shown
    * @param <T> type of t
@@ -37,6 +38,7 @@ public final class PreconditionUtility {
 
   /**
    * default error #chckNotNull
+   *
    * @param t t object
    * @param <T> type of t
    */
@@ -46,6 +48,7 @@ public final class PreconditionUtility {
 
   /**
    * Checks if condition is met or not
+   *
    * @param condition condition to check
    * @param errorMessage error string for stack trace
    */
