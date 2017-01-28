@@ -38,12 +38,17 @@ public abstract class AbstractActivity<P extends IPresenter> extends AppCompatAc
   }
 
   /**
-   * P is in here is definition not that is required in this abstraction
+   * String tag for instance
+   *
+   * @return String
    */
-
-
-
   protected abstract String   getClassTag();
+
+  /**
+   * Boolean
+   *
+   * @return Boolean
+   */
   protected abstract boolean  isLogEnabled();
 
   protected void log(final String str) {

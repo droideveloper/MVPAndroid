@@ -15,25 +15,84 @@
  */
 package org.fs.common;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 public interface IPresenter {
 
   /**
-   * context callback onCreate
+   * View's resume lifecycle
    */
-  void onCreate();
+  void onResume();
 
   /**
-   * context callback onStart
+   * View's pause lifecycle
+   */
+  void onPause();
+
+  /**
+   * View's start lifecycle
    */
   void onStart();
 
   /**
-   * context callback onPause
+   * View's stop lifecycle
    */
   void onStop();
 
   /**
-   * context callback onDestroy
+   * View's create lifecycle
+   */
+  void onCreate();
+
+  /**
+   * View's destroy lifecycle
    */
   void onDestroy();
+
+  /**
+   * View's backPressed lifecycle
+   */
+  void onBackPressed();
+
+  /**
+   * View's restoreState lifecycle
+   *
+   * @param restoreState previous state of view.
+   */
+  void restoreState(Bundle restoreState);
+
+  /**
+   * View's storeState lifecycle
+   *
+   * @param storeState current state of view.
+   */
+  void storeState(Bundle storeState);
+
+  /**
+   * View's activityResult lifecycle
+   *
+   * @param requestCode requestCode of call for result
+   * @param resultCode responseCode of called for result
+   * @param data data of called for result
+   */
+  void activityResult(int requestCode, int resultCode, Intent data);
+
+  /**
+   * View's requestPermissionResult lifecycle for API M and above
+   *
+   * @param requestCode requestCode of call for result
+   * @param permissions permissions of called for result
+   * @param grants grants of called for result
+   */
+  void requestPermissionResult(int requestCode, String[] permissions, int[] grants);
+
+  /**
+   * View's optionsItemSelected lifecycle callbacks
+   *
+   * @param item item that its actions destroyed
+   * @return true if handled false otherwise
+   */
+  boolean onOptionsItemSelected(MenuItem item);
 }

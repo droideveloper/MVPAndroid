@@ -32,7 +32,6 @@ public abstract class AbstractOrmliteHelper extends OrmLiteSqliteOpenHelper {
     super(context, dbName, null, dbVersion, dbConfig);
   }
 
-
   @Override public final void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
     try {
       createTables(connectionSource);

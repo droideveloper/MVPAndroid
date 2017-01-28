@@ -48,6 +48,7 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
 
   /**
    * calling this fragment system checks if this fragment attached to Window and its activity is alive...
+   *
    * @return true or false
    */
   protected boolean isCallingSafe() {
@@ -63,6 +64,7 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
 
   /**
    * overriden for committing with state loss
+   *
    * @param transaction FragmentTransaction instance
    * @param tag tag of fragment
    * @return int state
