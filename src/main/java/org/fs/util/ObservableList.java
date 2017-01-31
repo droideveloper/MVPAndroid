@@ -54,22 +54,6 @@ public class ObservableList<T> implements List<T> {
     }
   }
 
-  public ObservableList() {}
-
-  private ObservableList(Collection<T> itemStore) {
-    if(!Collections.isNullOrEmpty(itemStore)) {
-      this.itemStore.addAll(itemStore);
-    }
-  }
-
-  public static <T> ObservableList<T> of(Collection<T> itemsStore) {
-    return new ObservableList<>(itemsStore);
-  }
-
-  public final List<T> toList() {
-    return itemStore;
-  }
-
   public final ArrayList<T> toArrayList() {
     return new ArrayList<>(itemStore);
   }
