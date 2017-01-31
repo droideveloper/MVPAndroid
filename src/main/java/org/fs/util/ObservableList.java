@@ -21,7 +21,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java8.util.stream.IntStreams;
 import java8.util.stream.StreamSupport;
+import rx.functions.Func1;
 
 public class ObservableList<T> implements List<T> {
 
@@ -247,6 +249,15 @@ public class ObservableList<T> implements List<T> {
             .forEach(listener -> listener.notifyItemsRemoved(index, 1));
       }
       return removed;
+    }
+  }
+
+  public int indexOf(Func1<T, Boolean> test) {
+    synchronized (itemStore) {
+      return IntStreams.range(0, itemStore.size())
+          .filter(index -> test.call(get(index)))
+          .findFirst()
+          .orElse(-1);
     }
   }
 
