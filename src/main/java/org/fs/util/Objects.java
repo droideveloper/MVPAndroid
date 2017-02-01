@@ -18,8 +18,8 @@ package org.fs.util;
 import android.text.TextUtils;
 import java.io.File;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Collections;
+import java.util.Comparator;
 import java8.util.function.Predicate;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
@@ -105,5 +105,43 @@ public final class Objects {
           .collect(Collectors.toList());
     }
     return Collections.emptyList();
+  }
+
+  /**
+   * Convert Local file to Uri and then String
+   *
+   * @param file File instance
+   * @return String
+   */
+  public static String toUriString(File file) {
+    return file.toURI().toString();
+  }
+
+  /**
+   * FindFirst file in given extension in the directory if its not directory it will return null
+   *
+   * @param directory Directory to search in
+   * @param extension any file extension
+   * @return File instance or null
+   */
+  public static File findFirstExtension(File directory, String extension) {
+    if(directory.isDirectory()) {
+      return Arrays.first(directory.listFiles((f, name) -> name.endsWith(extension)));
+    }
+    return null;
+  }
+
+  /**
+   * FindFirst file in given extension in the directory if its not directory it will return null
+   *
+   * @param directory Directory to search in
+   * @param text might contain in file object name
+   * @return File instance or null
+   */
+  public static File findFirst(File directory, String text) {
+    if (directory.isDirectory()) {
+      return Arrays.first(directory.listFiles((f, name) -> name.contains(text)));
+    }
+    return null;
   }
 }

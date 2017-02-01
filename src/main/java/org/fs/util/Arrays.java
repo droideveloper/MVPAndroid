@@ -56,7 +56,7 @@ public final class Arrays {
    * @return last or null
    */
   public static <T> T last(T[] array) {
-    return isNullOrEmpty(array) ? null : array[array.length- 1];
+    return isNullOrEmpty(array) ? null : array[array.length - 1];
   }
 
   /**

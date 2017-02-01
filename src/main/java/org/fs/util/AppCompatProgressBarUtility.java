@@ -33,7 +33,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.ProgressBar;
 
-public final class AppCompatProgressBarUtility {
+final class AppCompatProgressBarUtility {
 
   private static final int[] TINT_ATTRS = {
           android.R.attr.indeterminateDrawable,
