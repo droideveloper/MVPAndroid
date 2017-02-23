@@ -17,6 +17,7 @@ package org.fs.common;
 
 import android.os.Handler;
 import android.os.Looper;
+import org.fs.util.Objects;
 
 public final class ThreadManager {
 
@@ -28,6 +29,8 @@ public final class ThreadManager {
    * Main Thread of UI
    */
   private final static Handler uiHandler = new Handler(Looper.getMainLooper());
+
+  private final static long DEFAULT_DELAY = 300L;
 
   /**
    * <p>Executes immediately</p>
@@ -41,11 +44,19 @@ public final class ThreadManager {
   }
 
   /**
+   * <p>Executes after default delay time</p>
+   * @param thread Runnable instance as block
+   */
+  public static void runOnUiThreadDelayed(Runnable thread) {
+    runOnUiThreadDelayed(thread, DEFAULT_DELAY);
+  }
+
+  /**
    * <p>Executes after delay time</p>
    * @param delay time to delay, if less then zero exception will be thrown
    * @param thread Runnable instance as block
    */
-  public static void runOnUiThreadDelayed(long delay, Runnable thread) {
+  public static void runOnUiThreadDelayed(Runnable thread, long delay) {
     if (thread == null) {
       throw new NullPointerException("block is null");
     }
@@ -53,5 +64,14 @@ public final class ThreadManager {
       throw new IllegalArgumentException("delay can not me smaller than 0");
     }
     uiHandler.postDelayed(thread, delay);
+  }
+
+  /**
+   * Clears All Callbacks scheduled or not from stack
+   */
+  public static void clearAll() {
+    if (!Objects.isNullOrEmpty(uiHandler)) {
+      uiHandler.removeCallbacksAndMessages(null);
+    }
   }
 }

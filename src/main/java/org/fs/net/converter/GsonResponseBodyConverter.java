@@ -15,32 +15,26 @@
  */
 package org.fs.net.converter;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-
-import org.fs.util.PreconditionUtility;
-
 import java.io.IOException;
-
 import okhttp3.ResponseBody;
+import org.fs.util.PreconditionUtility;
 import retrofit2.Converter;
 
 public class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
 
-  private final Gson           mGson;
-  private final TypeAdapter<T> mTypeAdapter;
+  private final TypeAdapter<T> typeAdapter;
 
-  public GsonResponseBodyConverter(final TypeAdapter<T> mTypeAdapter, final Gson mGson) {
-    this.mGson = mGson;
-    this.mTypeAdapter = mTypeAdapter;
+  public GsonResponseBodyConverter(final TypeAdapter<T> typeAdapter) {
+    this.typeAdapter = typeAdapter;
   }
 
   @Override public T convert(ResponseBody value) throws IOException {
     PreconditionUtility.checkNotNull(value, "response error");
     try {
-      JsonReader reader = mGson.newJsonReader(value.charStream());
-      return mTypeAdapter.read(reader);
+      JsonReader jsonReader = new JsonReader(value.charStream());
+      return typeAdapter.read(jsonReader);
     } finally {
       value.close();
     }

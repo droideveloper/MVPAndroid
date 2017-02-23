@@ -24,6 +24,10 @@ android {
     abortOnError false
   }
 
+  retrolambda {
+    javaVersion JavaVersion.VERSION_1_7
+  }
+
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
@@ -47,17 +51,17 @@ dependencies {
   // this is image downloading library
   compile 'com.github.bumptech.glide:glide:3.7.0'
   //this is json serialization library
-  compile 'com.google.code.gson:gson:2.6.2'
+  compile 'com.google.code.gson:gson:2.4'
   // this is http restful client from Square, Retrofit.
-  compile 'com.squareup.retrofit2:retrofit:2.1.0'
+  compile 'com.squareup.retrofit2:retrofit:2.2.0'
   //logging response and request for restApiCall
   compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
   //RxJava and RxAndroid
-  compile 'io.reactivex:rxjava:1.1.6'
-  compile 'io.reactivex:rxandroid:1.2.1'
+  compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  compile 'io.reactivex.rxjava2:rxjava:2.0.6'
   compile 'com.j256.ormlite:ormlite-android:4.48'
 
-  apt 'com.google.dagger:dagger-compiler:2.7'
-  compile 'com.google.dagger:dagger:2.7'
+  apt 'com.google.dagger:dagger-compiler:2.9'
+  compile 'com.google.dagger:dagger:2.9'
   provided 'javax.annotation:jsr250-api:1.0'
 }
