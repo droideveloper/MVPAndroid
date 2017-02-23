@@ -21,6 +21,10 @@ public class NetworkException extends RuntimeException {
     super(throwable);
   }
 
+  public NetworkException(String str, Throwable throwable) {
+    super(str, throwable);
+  }
+
   public NetworkException(String detailMessage) {
     super(detailMessage);
   }

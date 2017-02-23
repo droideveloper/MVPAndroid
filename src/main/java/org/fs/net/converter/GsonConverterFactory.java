@@ -31,41 +31,41 @@ import retrofit2.Retrofit;
 
 public class GsonConverterFactory extends Converter.Factory {
 
-  private final Gson mGson;
+  private final Gson gson;
 
   /**
    * Create GsonConverterFactory instance that uses user specified Gson object
-   * @param mGson Gson object instance that you configured with your needs
+   * @param gson Gson object instance that you configured with your needs
    * @return returns GsonConverterFactory that will be using your specific Gson object instance
    */
-  public static GsonConverterFactory createWithGson(Gson mGson) {
-    return new GsonConverterFactory(mGson);
+  public static GsonConverterFactory create(Gson gson) {
+    return new GsonConverterFactory(gson);
   }
 
   /**
    * Create GsonConverterFactory instance that uses new Gson object
    * @return returns GsonConverterFactory that will be using new Gson object instance
    */
-  public static GsonConverterFactory createWithDefaultGson() {
+  public static GsonConverterFactory create() {
     return new GsonConverterFactory(new Gson());
   }
 
-  private GsonConverterFactory(final Gson mGson) {
-    PreconditionUtility.checkNotNull(mGson, "gson instance is null");
-    this.mGson = mGson;
+  private GsonConverterFactory(final Gson gson) {
+    PreconditionUtility.checkNotNull(gson, "gson instance is null");
+    this.gson = gson;
   }
 
   @Override public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
     TypeAdapter<?> typeAdapter = typeAdapterFromType(type);
-    return new GsonResponseBodyConverter<>(typeAdapter, mGson);
+    return new GsonResponseBodyConverter<>(typeAdapter);
   }
 
   @Override public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
     TypeAdapter<?> typeAdapter = typeAdapterFromType(type);
-    return new GsonRequestBodyConverter<>(typeAdapter, mGson);
+    return new GsonRequestBodyConverter<>(typeAdapter);
   }
 
   private TypeAdapter<?> typeAdapterFromType(Type type) {
-    return mGson.getAdapter(TypeToken.get(type));
+    return gson.getAdapter(TypeToken.get(type));
   }
 }

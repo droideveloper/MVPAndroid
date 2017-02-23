@@ -15,7 +15,7 @@
  */
 package org.fs.common;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public interface IUseCase<T> {
 

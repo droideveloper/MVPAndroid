@@ -15,11 +15,11 @@
  */
 package org.fs.util;
 
+import io.reactivex.functions.Function;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 import org.fs.exception.AndroidException;
-import rx.functions.Action0;
-import rx.functions.Func0;
-import rx.functions.Func1;
+
 
 public final class InvokeUtility {
 
@@ -36,9 +36,13 @@ public final class InvokeUtility {
    * @param <T> type of return
    * @return T instance
    */
-  public static <T> T invoke(Func0<T> func) {
+  public static <T> T invoke(Callable<T> func) {
     PreconditionUtility.checkNotNull(func);
-    return func.call();
+    try {
+      return func.call();
+    } catch (Exception err) {
+      throw new AndroidException("error occured executing", err);
+    }
   }
 
   /**
@@ -50,9 +54,13 @@ public final class InvokeUtility {
    * @param <P>  type of param
    * @return T instance
    */
-  public static <T, P> T invoke(Func1<P, T> func, P p) {
+  public static <T, P> T invoke(Function<P, T> func, P p) {
     PreconditionUtility.checkNotNull(func);
-    return func.call(p);
+    try {
+      return func.apply(p);
+    } catch (Exception err) {
+      throw new AndroidException("error occured executing", err);
+    }
   }
 
   /**
@@ -60,7 +68,7 @@ public final class InvokeUtility {
    *
    * @param act action
    */
-  public static void invoke(Action0 act) {
-    act.call();
+  public static void invoke(Runnable act) {
+    act.run();
   }
 }

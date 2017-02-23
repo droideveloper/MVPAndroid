@@ -15,9 +15,10 @@
  */
 package org.fs.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 import org.fs.exception.AndroidException;
 
 public final class Collections {
@@ -37,13 +38,9 @@ public final class Collections {
   public static <T> Collection<T> filter(Collection<T> target, IPredicate<T> predicate) {
     if(target == null || target.isEmpty()) throw new AndroidException("target is empty or null");
     if(predicate == null) throw new AndroidException("predicate is null, can't apply filter");
-    Collection<T> result = new ArrayList<>();
-    for (T item : target) {
-      if(predicate.apply(item)) {
-        result.add(item);
-      }
-    }
-    return result;
+    return StreamSupport.stream(target)
+        .filter(predicate::apply)
+        .collect(Collectors.toList());
   }
 
   /**

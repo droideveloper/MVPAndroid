@@ -21,9 +21,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java8.util.function.Function;
 import java8.util.stream.IntStreams;
 import java8.util.stream.StreamSupport;
-import rx.functions.Func1;
 
 public class ObservableList<T> implements List<T> {
 
@@ -252,10 +252,10 @@ public class ObservableList<T> implements List<T> {
     }
   }
 
-  public int indexOf(Func1<T, Boolean> test) {
+  public int indexOf(Function<T, Boolean> test) {
     synchronized (itemStore) {
       return IntStreams.range(0, itemStore.size())
-          .filter(index -> test.call(get(index)))
+          .filter(index -> test.apply(get(index)))
           .findFirst()
           .orElse(-1);
     }

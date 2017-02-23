@@ -16,15 +16,17 @@
 package org.fs.exception;
 
 public class IllegalInstanceException extends Exception {
-  /**
-   * for reflection junkies
-   */
+
   public IllegalInstanceException() {
     super();
   }
 
   public IllegalInstanceException(Throwable e) {
     super(e);
+  }
+
+  public IllegalInstanceException(String str, Throwable throwable) {
+    super(str, throwable);
   }
 
   public IllegalInstanceException(String str) {

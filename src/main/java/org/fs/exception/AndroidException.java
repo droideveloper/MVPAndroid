@@ -25,6 +25,10 @@ public class AndroidException extends RuntimeException {
     super(throwable);
   }
 
+  public AndroidException(String str, Throwable throwable) {
+    super(str, throwable);
+  }
+
   public AndroidException(String detailMessage) {
     super(detailMessage);
   }

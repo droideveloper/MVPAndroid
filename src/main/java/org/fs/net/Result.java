@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Square, Inc.
+ * Copyright (C) 2015 Square, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,10 @@
 package org.fs.net;
 
 import java.io.IOException;
-
 import retrofit2.Response;
 
 /** The result of executing an HTTP request. */
 public final class Result<T> {
-
   public static <T> Result<T> error(Throwable error) {
     if (error == null) throw new NullPointerException("error == null");
     return new Result<>(null, error);
@@ -45,7 +43,7 @@ public final class Result<T> {
    * false, null otherwise.
    */
   public Response<T> response() {
-      return response;
+    return response;
   }
 
   /**
@@ -57,11 +55,11 @@ public final class Result<T> {
    * considered fatal (configuration error, programming error, etc.).
    */
   public Throwable error() {
-      return error;
+    return error;
   }
 
   /** {@code true} if the request resulted in an error. See {@link #error()} for the cause. */
   public boolean isError() {
-      return error != null;
+    return error != null;
   }
 }
