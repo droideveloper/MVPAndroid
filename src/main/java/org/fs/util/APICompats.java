@@ -17,9 +17,9 @@ package org.fs.util;
 
 import android.os.Build;
 
-public final class APICompats {
+public final class ApiCompats {
 
-  private APICompats() {
+  private ApiCompats() {
     throw new IllegalArgumentException("you can not have instance of this object");
   }
 
