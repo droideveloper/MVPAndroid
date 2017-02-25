@@ -18,23 +18,18 @@ package org.fs.common;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
-import org.fs.exception.AndroidException;
 
 public final class BusManager {
 
   private final static BusManager IMPL = new BusManager();
 
-  private final PublishSubject<Object> rxBus = PublishSubject.create();
+  private final PublishSubject<IEvent> rxBus = PublishSubject.create();
 
-  void post(Object event) {
-    if(event instanceof IEvent) {
-        rxBus.onNext(event);
-    } else {
-        throw new AndroidException("your object must be IEvent type, implement it.");
-    }
+  <T extends IEvent> void post(T event) {
+    rxBus.onNext(event);
   }
 
-  Disposable register(Consumer<Object> consumer) {
+  Disposable register(Consumer<IEvent> consumer) {
     return rxBus.subscribe(consumer);
   }
 
@@ -45,11 +40,11 @@ public final class BusManager {
     }
   }
 
-  public static void send(Object event) {
+  public static <T extends IEvent> void send(T event) {
     IMPL.post(event);
   }
 
-  public static Disposable add(Consumer<Object> consumer) {
+  public static Disposable add(Consumer<IEvent> consumer) {
     return IMPL.register(consumer);
   }
 
