@@ -1,11 +1,11 @@
-## CoreAndroid
+## MVP Android
 
 Android Library that contains Model-View-Presenter and other Android related super classes that makes life easier for a developer.
 
 ## Licence
 
 ```
-  CoreAndroid Copyright (C) 2016 Fatih.
+  MVP Android Copyright (C) 2016 Fatih.
  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
