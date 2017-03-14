@@ -15,20 +15,78 @@
  */
 package org.fs.core;
 
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-
-import org.fs.common.PresenterType;
-
+import android.view.View;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import org.fs.common.PresenterType;
 
 public abstract class AbstractDialogFragment<P extends PresenterType> extends DialogFragment {
 
-  protected abstract String   getClassTag();
-  protected abstract boolean  isLogEnabled();
+  public void showError(String errorString) {
+    final View view = view();
+    if(view != null) {
+      Snackbar.make(view, errorString, Snackbar.LENGTH_LONG)
+          .show();
+    }
+  }
+
+  public void showError(String errorString, String actionTextString, View.OnClickListener callback) {
+    final View view = view();
+    if(view != null) {
+      final Snackbar snackbar = Snackbar.make(view, errorString, Snackbar.LENGTH_LONG);
+      snackbar.setAction(actionTextString, v -> {
+        if(callback != null) {
+          callback.onClick(v);
+        }
+        snackbar.dismiss();
+      });
+      snackbar.show();
+    }
+  }
+
+  public String getStringResource(@StringRes int stringId) {
+    return getString(stringId);
+  }
+
+  public Context getContext() {
+    return getActivity();
+  }
+
+  public boolean isAvailable() {
+    return getActivity() != null && isAdded();
+  }
+
+  @Nullable protected View view() {
+    return getView();
+  }
+
+  public void finish() {
+    throw new IllegalArgumentException("fragment instances does not support finish options");
+  }
+
+  @Override public final void dismiss() {
+    super.dismiss();//change of state loss
+  }
+
+  @Override public final int show(FragmentTransaction transaction, String tag) {
+    return transaction.add(this, tag).commit();
+  }
+
+  @Override public final void show(FragmentManager manager, String tag) {
+    FragmentTransaction trans = manager.beginTransaction();
+    show(trans, tag);
+  }
+
+  protected abstract String getClassTag();
+  protected abstract boolean isLogEnabled();
 
   protected void log(final String str) {
     log(Log.DEBUG, str);
@@ -44,22 +102,5 @@ public abstract class AbstractDialogFragment<P extends PresenterType> extends Di
     if(isLogEnabled()) {
       Log.println(lv, getClassTag(), str);
     }
-  }
-
-  protected boolean isCallingSafe() {
-    return getActivity() != null && isAdded();
-  }
-
-  @Override public final void dismiss() {
-    super.dismiss();//change of state loss
-  }
-
-  @Override public final int show(FragmentTransaction transaction, String tag) {
-    return transaction.add(this, tag).commit();
-  }
-
-  @Override public final void show(FragmentManager manager, String tag) {
-    FragmentTransaction trans = manager.beginTransaction();
-    show(trans, tag);
   }
 }
