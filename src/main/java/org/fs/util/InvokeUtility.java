@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import java.util.Locale;
 import java.util.concurrent.Callable;
 import org.fs.exception.AndroidException;
 
-
 public final class InvokeUtility {
 
   private InvokeUtility() {
@@ -29,13 +28,6 @@ public final class InvokeUtility {
     );
   }
 
-  /**
-   * Invoke void param func where it returns T
-   *
-   * @param func function
-   * @param <T> type of return
-   * @return T instance
-   */
   public static <T> T invoke(Callable<T> func) {
     PreconditionUtility.checkNotNull(func);
     try {
@@ -45,15 +37,6 @@ public final class InvokeUtility {
     }
   }
 
-  /**
-   * Invoke P type param func where it returns T
-   *
-   * @param func function
-   * @param p type of param
-   * @param <T> type of return
-   * @param <P>  type of param
-   * @return T instance
-   */
   public static <T, P> T invoke(Function<P, T> func, P p) {
     PreconditionUtility.checkNotNull(func);
     try {
@@ -63,11 +46,6 @@ public final class InvokeUtility {
     }
   }
 
-  /**
-   * Invoke void param action where it returns void
-   *
-   * @param act action
-   */
   public static void invoke(Runnable act) {
     act.run();
   }

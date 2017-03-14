@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,11 +49,10 @@ public abstract class AbstractOrmliteHelper extends OrmLiteSqliteOpenHelper {
     }
   }
 
-  protected abstract void     createTables(ConnectionSource cs) throws SQLException;
-  protected abstract void     dropTables(ConnectionSource cs) throws SQLException;
-  protected abstract String   getClassTag();
-  protected abstract boolean  isLogEnabled();
-
+  protected abstract void createTables(ConnectionSource cs) throws SQLException;
+  protected abstract void dropTables(ConnectionSource cs) throws SQLException;
+  protected abstract String getClassTag();
+  protected abstract boolean isLogEnabled();
 
   protected void log(final String str) {
     log(Log.DEBUG, str);

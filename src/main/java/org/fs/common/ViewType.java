@@ -13,23 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fs.exception;
+package org.fs.common;
 
-public class IllegalInstanceException extends Exception {
+import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.StringRes;
+import android.view.View;
 
-  public IllegalInstanceException() {
-    super();
-  }
+public interface ViewType {
 
-  public IllegalInstanceException(Throwable e) {
-    super(e);
-  }
+  void showError(String errorString);
 
-  public IllegalInstanceException(String str, Throwable throwable) {
-    super(str, throwable);
-  }
+  void showError(String errorString, String buttonViewText, View.OnClickListener callback);
 
-  public IllegalInstanceException(String str) {
-    super(str);
-  }
+  String getStringResource(@StringRes int stringId);
+
+  void startActivity(Intent intent);
+
+  void startActivityForResult(Intent intent, int requestCode);
+
+  void requestPermissions(String[] permissions, int requestCode);
+
+  void finish();
+
+  boolean isAvailable();
+
+  Context getContext();
 }

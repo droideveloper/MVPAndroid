@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public interface IPresenter {
+public interface PresenterType {
 
   /**
    * View's resume lifecycle

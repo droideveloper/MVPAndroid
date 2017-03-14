@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,14 +27,6 @@ public final class Collections {
     throw new AndroidException("no sugar for ya");
   }
 
-  /**
-   * filters collection and returns matching results as new collection
-   * @param target target collection to be filtered
-   * @param predicate filter logic defined
-   * @param <T> Type
-   * @return new Collection, filtered accordingly it might be empty
-   * @throws AndroidException if target is null or empty and also if predicate is null
-   */
   public static <T> Collection<T> filter(Collection<T> target, IPredicate<T> predicate) {
     if(target == null || target.isEmpty()) throw new AndroidException("target is empty or null");
     if(predicate == null) throw new AndroidException("predicate is null, can't apply filter");
@@ -43,38 +35,17 @@ public final class Collections {
         .collect(Collectors.toList());
   }
 
-  /**
-   * try to return index of a list inside another list
-   *
-   * @param source source for search in
-   * @param search item to be searched
-   * @param <T> type of items
-   * @return -1 if nothing found else index
-   */
   public static <T> int indexOfSubList(List<T> source, Collection<?> search) {
     return java.util.Collections.indexOfSubList(source, (List<?>) search);
   }
 
-  /**
-   * checks Collection&alt;T> is null or empty
-   * @param collection collection instance
-   * @param <T> type
-   * @return true if empty or null false else otherwise
-   */
   public static <T> boolean isNullOrEmpty(Collection<T> collection) {
     return collection == null || collection.isEmpty();
   }
 
-  /**
-   * filter logic implementation
-   * @param <T> Type
-   */
+
   public interface IPredicate<T> {
-      /**
-       * filtering logic you implement in here
-       * @param type T type of object
-       * @return true or false
-       */
+
       boolean apply(T type);
   }
 }

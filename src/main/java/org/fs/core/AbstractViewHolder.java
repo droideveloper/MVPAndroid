@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import java.io.StringWriter;
 
 public abstract class AbstractViewHolder<D> {
 
-  protected       D    data;
+  protected D data;
   protected final View view;
 
   public AbstractViewHolder(@NonNull View view) {
@@ -50,10 +50,6 @@ public abstract class AbstractViewHolder<D> {
     }
   }
 
-  /**
-   *
-   * @return View instance of this holder pointing to
-   */
   public final View getView() {
     return view;
   }
@@ -61,10 +57,6 @@ public abstract class AbstractViewHolder<D> {
   protected abstract String   getClassTag();
   protected abstract boolean  isLogEnabled();
 
-  /**
-   *
-   * @param data D type of object this ViewHolder is binding to
-   */
-  public    abstract void     onBindView(D data);
+  public abstract void onBindView(D data);
 
 }

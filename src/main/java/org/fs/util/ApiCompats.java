@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,6 @@ public final class ApiCompats {
     throw new IllegalArgumentException("you can not have instance of this object");
   }
 
-  /**
-   * checks if sdk is valid
-   *
-   * @param requiredSdkVersion sdk int fdr check
-   * @return Boolean
-   */
   public static boolean isApiAvailable(int requiredSdkVersion) {
     return Build.VERSION.SDK_INT >= requiredSdkVersion;
   }

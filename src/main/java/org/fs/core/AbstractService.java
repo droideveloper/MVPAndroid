@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@ package org.fs.core;
 import android.app.Service;
 import android.util.Log;
 
-import org.fs.common.IPresenter;
+import org.fs.common.PresenterType;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public abstract class AbstractService<P extends IPresenter> extends Service {
+public abstract class AbstractService<P extends PresenterType> extends Service {
 
   protected abstract String   getClassTag();
   protected abstract boolean  isLogEnabled();

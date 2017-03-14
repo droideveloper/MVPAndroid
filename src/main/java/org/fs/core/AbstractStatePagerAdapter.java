@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.fs.core;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -26,12 +27,9 @@ import java.util.List;
 
 public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAdapter {
 
-    /**
-     * we might want to access it in child class
-     */
-  protected List<D> dataSet = null;
+  private final List<D> dataSet;
 
-  public AbstractStatePagerAdapter(FragmentManager fragmentManager, List<D> dataSet) {
+  public AbstractStatePagerAdapter(FragmentManager fragmentManager, @NonNull List<D> dataSet) {
     super(fragmentManager);
     this.dataSet = dataSet;
   }
@@ -62,9 +60,7 @@ public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAda
   }
 
   @Override public final int getCount() {
-    return dataSet == null
-        ? 0
-        : dataSet.size();
+    return dataSet.size();
   }
 
   protected final D getItemAtIndex(int index) {

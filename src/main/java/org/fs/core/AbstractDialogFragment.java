@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import org.fs.common.IPresenter;
+import org.fs.common.PresenterType;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public abstract class AbstractDialogFragment<P extends IPresenter> extends DialogFragment {
+public abstract class AbstractDialogFragment<P extends PresenterType> extends DialogFragment {
 
   protected abstract String   getClassTag();
   protected abstract boolean  isLogEnabled();
@@ -46,39 +46,18 @@ public abstract class AbstractDialogFragment<P extends IPresenter> extends Dialo
     }
   }
 
-  /**
-   * calling this fragment system checks if this fragment attached to Window and its activity is alive...
-   *
-   * @return true or false
-   */
   protected boolean isCallingSafe() {
     return getActivity() != null && isAdded();
   }
 
-  /**
-   * allowing state loss all the time to support various devices.
-   */
   @Override public final void dismiss() {
     super.dismiss();//change of state loss
   }
 
-  /**
-   * overriden for committing with state loss
-   *
-   * @param transaction FragmentTransaction instance
-   * @param tag tag of fragment
-   * @return int state
-   */
   @Override public final int show(FragmentTransaction transaction, String tag) {
-    return transaction.add(this, tag)
-                      .commit();//change of state loss
+    return transaction.add(this, tag).commit();
   }
 
-  /**
-   * overriden for committing with state loss
-   * @param manager FragmentManager instance
-   * @param tag tag of fragment
-   */
   @Override public final void show(FragmentManager manager, String tag) {
     FragmentTransaction trans = manager.beginTransaction();
     show(trans, tag);

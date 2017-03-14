@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,41 +15,17 @@
  */
 package org.fs.core;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import org.fs.common.IPresenter;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import org.fs.common.PresenterType;
 
-public abstract class AbstractActivity<P extends IPresenter> extends AppCompatActivity {
+public abstract class AbstractActivity<P extends PresenterType> extends AppCompatActivity {
 
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    overridePendingTransition(R.anim.translate_right_in, R.anim.scale_out);
-  }
+  protected abstract String getClassTag();
 
-  @Override public void finish() {
-    super.finish();
-    overridePendingTransition(R.anim.translate_right_out, R.anim.scale_in);
-  }
-
-  /**
-   * String tag for instance
-   *
-   * @return String
-   */
-  protected abstract String   getClassTag();
-
-  /**
-   * Boolean
-   *
-   * @return Boolean
-   */
-  protected abstract boolean  isLogEnabled();
+  protected abstract boolean isLogEnabled();
 
   protected void log(final String str) {
     log(Log.DEBUG, str);

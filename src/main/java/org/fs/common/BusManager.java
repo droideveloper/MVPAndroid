@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +23,13 @@ public final class BusManager {
 
   private final static BusManager IMPL = new BusManager();
 
-  private final PublishSubject<IEvent> rxBus = PublishSubject.create();
+  private final PublishSubject<EventType> rxBus = PublishSubject.create();
 
-  <T extends IEvent> void post(T event) {
+  <T extends EventType> void post(T event) {
     rxBus.onNext(event);
   }
 
-  Disposable register(Consumer<? super IEvent> consumer) {
+  Disposable register(Consumer<? super EventType> consumer) {
     return rxBus.subscribe(consumer);
   }
 
@@ -40,11 +40,11 @@ public final class BusManager {
     }
   }
 
-  public static <T extends IEvent> void send(T event) {
+  public static <T extends EventType> void send(T event) {
     IMPL.post(event);
   }
 
-  public static Disposable add(Consumer<? super IEvent> consumer) {
+  public static Disposable add(Consumer<? super EventType> consumer) {
     return IMPL.register(consumer);
   }
 

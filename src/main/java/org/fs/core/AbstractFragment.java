@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@ package org.fs.core;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import org.fs.common.IPresenter;
+import org.fs.common.PresenterType;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public abstract class AbstractFragment<P extends IPresenter> extends Fragment {
+public abstract class AbstractFragment<P extends PresenterType> extends Fragment {
 
   protected abstract String   getClassTag();
   protected abstract boolean  isLogEnabled();
@@ -45,10 +45,6 @@ public abstract class AbstractFragment<P extends IPresenter> extends Fragment {
     }
   }
 
-  /**
-   * calling this fragment system checks if this fragment attached to Window and its activity is alive...
-   * @return true or false
-   */
   protected boolean isCallingSafe() {
     return getActivity() != null && isAdded();
   }

@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,27 +17,12 @@ package org.fs.util;
 
 public interface IPropertyChangedListener {
 
-  /**
-   * remove callback
-   *
-   * @param index index
-   * @param size size
-   */
+
   void notifyItemsRemoved(int index, int size);
 
-  /**
-   * insert callback
-   *
-   * @param index index
-   * @param size size
-   */
+
   void notifyItemsInserted(int index, int size);
 
-  /**
-   * change callback
-   *
-   * @param index index
-   * @param size size
-   */
+
   void notifyItemsChanged(int index, int size);
 }

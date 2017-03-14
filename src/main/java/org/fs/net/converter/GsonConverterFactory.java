@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,19 +33,10 @@ public class GsonConverterFactory extends Converter.Factory {
 
   private final Gson gson;
 
-  /**
-   * Create GsonConverterFactory instance that uses user specified Gson object
-   * @param gson Gson object instance that you configured with your needs
-   * @return returns GsonConverterFactory that will be using your specific Gson object instance
-   */
   public static GsonConverterFactory create(Gson gson) {
     return new GsonConverterFactory(gson);
   }
 
-  /**
-   * Create GsonConverterFactory instance that uses new Gson object
-   * @return returns GsonConverterFactory that will be using new Gson object instance
-   */
   public static GsonConverterFactory create() {
     return new GsonConverterFactory(new Gson());
   }

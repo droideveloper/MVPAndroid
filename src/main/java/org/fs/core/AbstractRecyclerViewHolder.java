@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,7 @@ public abstract class AbstractRecyclerViewHolder<T> extends RecyclerView.ViewHol
   protected abstract String   getClassTag();
   protected abstract boolean  isLogEnabled();
 
-  /**
-   * Need this public to be able to access it from outside
-   * @param data T type of data
-   */
-  public abstract void     onBindView(T data);
+  public abstract void onBindView(T data);
 
   protected void log(final String str) {
     log(Log.DEBUG, str);
@@ -54,10 +50,6 @@ public abstract class AbstractRecyclerViewHolder<T> extends RecyclerView.ViewHol
     }
   }
 
-  /**
-   * method returns contentView from structured view
-   * @return View instance of as root
-   */
   protected View getView() {
     return itemView != null ? itemView : null;
   }

@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,15 +27,15 @@ import java.util.List;
 
 public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
 
-  protected List<D> dataSet = null;
+  protected final List<D> dataSet;
 
-  public AbstractPagerAdapter(FragmentManager fragmentManager, List<D> dataSet) {
+  public AbstractPagerAdapter(FragmentManager fragmentManager, @NonNull List<D> dataSet) {
       super(fragmentManager);
       this.dataSet = dataSet;
   }
 
-  protected abstract String   getClassTag();
-  protected abstract boolean  isLogEnabled();
+  protected abstract String getClassTag();
+  protected abstract boolean isLogEnabled();
   protected abstract Fragment onBind(int position, D element);
 
   protected final void log(final String str) {
@@ -60,29 +60,23 @@ public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
   }
 
   public void appendData(@NonNull D data, boolean front) {
-    if(dataSet != null) {
-      if (front) {
-        dataSet.add(0, data);
-      } else {
-        dataSet.add(data);
-      }
+    if (front) {
+      dataSet.add(0, data);
+    } else {
+      dataSet.add(data);
     }
   }
 
   public void appendData(@NonNull List<D> data, boolean front) {
-    if(dataSet != null) {
-      if(front) {
-        dataSet.addAll(0, data);
-      } else {
-        dataSet.addAll(data);
-      }
+    if(front) {
+      dataSet.addAll(0, data);
+    } else {
+      dataSet.addAll(data);
     }
   }
 
   @Override public final int getCount() {
-    return dataSet == null
-        ? 0
-        : dataSet.size();
+    return dataSet.size();
   }
 
   protected final D getItemAtIndex(int index) {

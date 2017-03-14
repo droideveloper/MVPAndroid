@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,29 +16,24 @@
 package org.fs.core;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> extends BaseAdapter {
 
-  protected final List<D>                 dataSet;
-  protected final WeakReference<Context>  contextRef;
-  protected final LayoutInflater          inflater;
-  private final Object                    lock = new Object();
+  protected final List<D> dataSet;
+  protected final WeakReference<Context> contextRef;
+  private final Object lock = new Object();
 
   public AbstractListAdapter(Context context) {
     this(context, new ArrayList<>());
@@ -46,50 +41,33 @@ public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> e
 
   public AbstractListAdapter(Context context, @NonNull List<D> dataSet) {
     this.dataSet = dataSet;
-    this.contextRef = context != null ?
-        new WeakReference<>(context) : null;
-    if(context != null) {
-      Resources.Theme theme = context.getTheme();
-      if (theme != null) {
-        this.inflater = LayoutInflater.from(new ContextThemeWrapper(context, theme));
-      } else {
-        this.inflater = LayoutInflater.from(context);
-      }
-    } else {
-      this.inflater = null;//happy?
-    }
+    this.contextRef = context != null ? new WeakReference<>(context) : null;
   }
 
   public final void add(D object) {
     synchronized (lock) {
-      if(dataSet != null) {
-        if(!dataSet.contains(object)) {
-          dataSet.add(object);
-          notifyDataSetChanged();
-        }
+      if(!dataSet.contains(object)) {
+        dataSet.add(object);
+        notifyDataSetChanged();
       }
     }
   }
 
   public final void addAll(@NonNull List<D> objects) {
     synchronized (lock) {
-      if(dataSet != null) {
-        if(!dataSet.containsAll(objects)) {
-          dataSet.addAll(objects);
-          notifyDataSetChanged();
-        }
+      if(!dataSet.containsAll(objects)) {
+        dataSet.addAll(objects);
+        notifyDataSetChanged();
       }
     }
   }
 
   public final boolean remove(@NonNull D object) {
     synchronized (lock) {
-      if(dataSet != null) {
-        if(dataSet.contains(object)) {
-          dataSet.remove(object);
-          notifyDataSetChanged();
-          return true;
-        }
+      if(dataSet.contains(object)) {
+        dataSet.remove(object);
+        notifyDataSetChanged();
+        return true;
       }
       return false;
     }
@@ -97,31 +75,26 @@ public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> e
 
   public final D removeAt(@IntRange(from = 0) int index) {
     synchronized (lock) {
-      if(dataSet != null) {
-        D removed;
-        if(index < dataSet.size()) {
-          removed = dataSet.remove(index);
-          notifyDataSetChanged();
-          return removed;
-        }
+      D removed = null;
+      if(index < dataSet.size()) {
+        removed = dataSet.remove(index);
+        notifyDataSetChanged();
       }
-      return null;
+      return removed;
     }
   }
 
   public final D getItemAt(@IntRange(from = 0) int index) {
     synchronized (lock) {
-      if(dataSet != null) {
-        if(index < dataSet.size()) {
-          return dataSet.get(index);
-        }
+      if(index < dataSet.size()) {
+        return dataSet.get(index);
       }
       return null;
     }
   }
 
   @Override public int getCount() {
-    return dataSet != null ? dataSet.size() : 0;
+    return dataSet.size();
   }
 
   @Override public int getItemViewType(int position) {
@@ -166,12 +139,7 @@ public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> e
   protected final LayoutInflater inflaterFactory() {
     final Context context = getContext();
     if(context != null) {
-      Resources.Theme theme = context.getTheme();
-      if(theme != null) {
-        return LayoutInflater.from(new ContextThemeWrapper(context, theme));
-      } else {
-        return LayoutInflater.from(context);
-      }
+      return LayoutInflater.from(context);
     }
     return null;
   }

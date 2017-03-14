@@ -1,5 +1,5 @@
 /*
- * Core Android Copyright (C) 2016 Fatih.
+ * MVP Android Copyright (C) 2016 Fatih.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,4 @@
  */
 package org.fs.common;
 
-import io.reactivex.Observable;
-
-public interface IUseCase<T> {
-
-  /**
-   * turn execute into async executable with help of RxJava
-   * @return Observable of T type.
-   */
-  Observable<T> asObservable();
-}
+public interface EventType { /** TYPE_DEFINITION **/ }
