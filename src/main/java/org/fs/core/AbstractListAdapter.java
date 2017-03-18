@@ -36,7 +36,7 @@ public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> e
   private final Object lock = new Object();
 
   public AbstractListAdapter(Context context) {
-    this(context, new ArrayList<>());
+    this(context, new ArrayList<D>());
   }
 
   public AbstractListAdapter(Context context, @NonNull List<D> dataSet) {

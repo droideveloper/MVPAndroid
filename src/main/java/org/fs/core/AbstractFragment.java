@@ -36,15 +36,17 @@ public abstract class AbstractFragment<P extends PresenterType> extends Fragment
     }
   }
 
-  public void showError(String errorString, String actionTextString, View.OnClickListener callback) {
+  public void showError(String errorString, String actionTextString, final View.OnClickListener callback) {
     final View view = view();
     if(view != null) {
       final Snackbar snackbar = Snackbar.make(view, errorString, Snackbar.LENGTH_LONG);
-      snackbar.setAction(actionTextString, v -> {
-        if(callback != null) {
-          callback.onClick(v);
+      snackbar.setAction(actionTextString, new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          if (callback != null) {
+            callback.onClick(v);
+          }
+          snackbar.dismiss();
         }
-        snackbar.dismiss();
       });
       snackbar.show();
     }

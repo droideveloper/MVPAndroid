@@ -15,10 +15,9 @@
  */
 package org.fs.util;
 
+import io.reactivex.functions.Predicate;
 import java.util.Collection;
 import java.util.List;
-import java8.util.stream.Collectors;
-import java8.util.stream.StreamSupport;
 import org.fs.exception.AndroidException;
 
 public final class Collections {
@@ -27,12 +26,10 @@ public final class Collections {
     throw new AndroidException("no sugar for ya");
   }
 
-  public static <T> Collection<T> filter(Collection<T> target, IPredicate<T> predicate) {
+  public static <T> List<T> filter(List<T> target, Predicate<T> predicate) {
     if(target == null || target.isEmpty()) throw new AndroidException("target is empty or null");
     if(predicate == null) throw new AndroidException("predicate is null, can't apply filter");
-    return StreamSupport.stream(target)
-        .filter(predicate::apply)
-        .collect(Collectors.toList());
+    return Objects.filter(target, predicate);
   }
 
   public static <T> int indexOfSubList(List<T> source, Collection<?> search) {
@@ -41,11 +38,5 @@ public final class Collections {
 
   public static <T> boolean isNullOrEmpty(Collection<T> collection) {
     return collection == null || collection.isEmpty();
-  }
-
-
-  public interface IPredicate<T> {
-
-      boolean apply(T type);
   }
 }

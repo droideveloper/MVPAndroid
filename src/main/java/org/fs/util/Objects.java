@@ -16,21 +16,20 @@
 package org.fs.util;
 
 import android.text.TextUtils;
+import io.reactivex.functions.Predicate;
 import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java8.util.function.Predicate;
-import java8.util.stream.Collectors;
-import java8.util.stream.StreamSupport;
+import java.util.List;
 
 public final class Objects {
-
 
   private Objects() {
     throw new IllegalArgumentException("you can not have instance of this object.");
   }
-
 
   public static <T> boolean isNullOrEmpty(T object) {
     if (object == null) return true;
@@ -49,7 +48,6 @@ public final class Objects {
     return false;
   }
 
-
   @SuppressWarnings("unchecked")
   public static <T> T toObject(Object o) {
     if (o == null) return null;
@@ -60,20 +58,29 @@ public final class Objects {
     }
   }
 
-  public static <T> Collection<T> sort(Collection<T> collection, Comparator<T> filter) {
-    if (!isNullOrEmpty(collection))  {
-      StreamSupport.stream(collection)
-          .sorted(filter)
-          .collect(Collectors.toList());
+  public static <T> List<T> sort(List<T> collection, Comparator<T> filter) {
+    if (!isNullOrEmpty(collection)) {
+      Collections.sort(collection, filter);
+      return collection;
     }
     return Collections.emptyList();
   }
 
-  public static <T> Collection<T> filter(Collection<T> collection, Predicate<T> condition) {
+  public static <T> List<T> filter(List<T> collection, Predicate<T> predicate) {
     if (!isNullOrEmpty(collection)) {
-      StreamSupport.stream(collection)
-          .filter(condition)
-          .collect(Collectors.toList());
+      List<T> newCollection = new ArrayList<>();
+      for (int i = 0, z = collection.size(); i < z; i++) {
+        final T item = collection.get(i);
+        try {
+          if (predicate.test(item)) {
+            newCollection.add(item);
+          }
+        } catch (Exception error) {
+          error.printStackTrace();
+          break;
+        }
+      }
+      return newCollection;
     }
     return Collections.emptyList();
   }
@@ -82,16 +89,24 @@ public final class Objects {
     return file.toURI().toString();
   }
 
-  public static File findFirstExtension(File directory, String extension) {
+  public static File findFirstExtension(File directory, final String extension) {
     if(directory.isDirectory()) {
-      return Arrays.first(directory.listFiles((f, name) -> name.endsWith(extension)));
+      return Arrays.first(directory.listFiles(new FilenameFilter() {
+        @Override public boolean accept(File f, String name) {
+          return name.endsWith(extension);
+        }
+      }));
     }
     return null;
   }
 
-  public static File findFirst(File directory, String text) {
+  public static File findFirst(File directory, final String text) {
     if (directory.isDirectory()) {
-      return Arrays.first(directory.listFiles((f, name) -> name.contains(text)));
+      return Arrays.first(directory.listFiles(new FilenameFilter() {
+        @Override public boolean accept(File dir, String name) {
+          return name.contains(text);
+        }
+      }));
     }
     return null;
   }
