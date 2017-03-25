@@ -30,6 +30,14 @@ import org.fs.common.PresenterType;
 
 public abstract class AbstractDialogFragment<P extends PresenterType> extends DialogFragment {
 
+  public void showProgress() {
+    throw new RuntimeException("You should implement this method without calling super");
+  }
+
+  public void hideProgress() {
+    throw new RuntimeException("You should implement this method without calling super");
+  }
+
   public void showError(String errorString) {
     final View view = view();
     if(view != null) {

@@ -22,6 +22,10 @@ import android.view.View;
 
 public interface ViewType {
 
+  void showProgress();
+
+  void hideProgress();
+
   void showError(String errorString);
 
   void showError(String errorString, String buttonViewText, View.OnClickListener callback);
