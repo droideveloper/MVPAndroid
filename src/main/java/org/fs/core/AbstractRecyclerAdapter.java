@@ -90,7 +90,7 @@ public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHold
   }
 
   public void appendData(List<D> data, boolean front) {
-    if(front) {
+    if (front) {
       dataSet.addAll(0, data);
       notifyItemRangeInserted(0, data.size());
     } else {

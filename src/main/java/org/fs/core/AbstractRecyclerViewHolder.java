@@ -53,4 +53,7 @@ public abstract class AbstractRecyclerViewHolder<T> extends RecyclerView.ViewHol
   protected View getView() {
     return itemView != null ? itemView : null;
   }
+
+  public void attached() { }
+  public void detached() { }
 }
