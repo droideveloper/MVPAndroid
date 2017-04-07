@@ -15,7 +15,7 @@
  */
 package org.fs.util;
 
-public interface IPropertyChangedListener {
+public interface PropertyChangedListener {
 
 
   void notifyItemsRemoved(int index, int size);
