@@ -27,7 +27,7 @@ public final class ViewUtility {
     throw new AndroidException("no instance for ya!");
   }
 
-  @SuppressWarnings("unchecked") public static <T> T castAsField(View view) {
+  @SuppressWarnings("unchecked") public static <T> T castAs(View view) {
     return (T) view;
   }
 

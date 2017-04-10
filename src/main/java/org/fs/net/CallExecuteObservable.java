@@ -61,7 +61,7 @@ final class CallExecuteObservable<T> extends Observable<Response<T>> {
     }
   }
 
-  private static final class CallDisposable implements Disposable {
+  static final class CallDisposable implements Disposable {
     private final Call<?> call;
 
     CallDisposable(Call<?> call) {
