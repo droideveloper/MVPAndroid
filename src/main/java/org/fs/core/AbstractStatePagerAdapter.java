@@ -20,22 +20,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.List;
+import org.fs.util.ObservableList;
 
 public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAdapter {
 
-  private final List<D> dataSet;
+  private final ObservableList<D> dataSet;
 
-  public AbstractStatePagerAdapter(FragmentManager fragmentManager, @NonNull List<D> dataSet) {
+  public AbstractStatePagerAdapter(FragmentManager fragmentManager, @NonNull ObservableList<D> dataSet) {
     super(fragmentManager);
     this.dataSet = dataSet;
   }
 
-  protected abstract String   getClassTag();
-  protected abstract boolean  isLogEnabled();
+  protected abstract String getClassTag();
+  protected abstract boolean isLogEnabled();
   protected abstract Fragment onBind(int position, D element);
 
   protected final void log(final String str) {

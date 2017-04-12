@@ -20,16 +20,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.List;
+import org.fs.util.ObservableList;
 
 public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
 
-  protected final List<D> dataSet;
+  protected final ObservableList<D> dataSet;
 
-  public AbstractPagerAdapter(FragmentManager fragmentManager, @NonNull List<D> dataSet) {
+  public AbstractPagerAdapter(FragmentManager fragmentManager, @NonNull ObservableList<D> dataSet) {
       super(fragmentManager);
       this.dataSet = dataSet;
   }
@@ -56,22 +55,6 @@ public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
   protected final void log(final int lv, final String str) {
     if(isLogEnabled()) {
       Log.println(lv, getClassTag(), str);
-    }
-  }
-
-  public void appendData(@NonNull D data, boolean front) {
-    if (front) {
-      dataSet.add(0, data);
-    } else {
-      dataSet.add(data);
-    }
-  }
-
-  public void appendData(@NonNull List<D> data, boolean front) {
-    if(front) {
-      dataSet.addAll(0, data);
-    } else {
-      dataSet.addAll(data);
     }
   }
 

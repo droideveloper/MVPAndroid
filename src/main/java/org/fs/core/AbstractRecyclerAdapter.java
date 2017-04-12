@@ -24,15 +24,15 @@ import android.view.ViewGroup;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
-import java.util.List;
+import org.fs.util.ObservableList;
 
 public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> {
 
-  protected final List<D> dataSet;
+  protected final ObservableList<D> dataSet;
   private final WeakReference<Context> contextRef;
 
 
-  public AbstractRecyclerAdapter(@NonNull List<D> dataSet, Context context) {
+  public AbstractRecyclerAdapter(@NonNull ObservableList<D> dataSet, Context context) {
     this.dataSet = dataSet;
     this.contextRef = context != null ? new WeakReference<>(context) : null;
   }
@@ -66,36 +66,6 @@ public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHold
   protected void log(final int lv, final String str) {
     if(isLogEnabled()) {
       Log.println(lv, getClassTag(), str);
-    }
-  }
-
-  public void appendData(D data, boolean front) {
-    if (front) {
-      dataSet.add(0, data);
-      notifyItemInserted(0);
-    } else {
-      dataSet.add(data);
-      notifyItemInserted(getItemCount() - 1);
-    }
-  }
-
-  public void removeData(D data) {
-    int index = dataSet.indexOf(data);
-    if (index != -1) {
-      dataSet.remove(data);
-      notifyItemRemoved(index);
-    } else {
-      dataSet.add(data);
-    }
-  }
-
-  public void appendData(List<D> data, boolean front) {
-    if(front) {
-      dataSet.addAll(0, data);
-      notifyItemRangeInserted(0, data.size());
-    } else {
-      dataSet.addAll(data);
-      notifyItemRangeInserted(dataSet.size() - data.size(), data.size());
     }
   }
 

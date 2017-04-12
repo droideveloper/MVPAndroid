@@ -26,71 +26,24 @@ import android.widget.BaseAdapter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
+import org.fs.util.ObservableList;
 
 public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> extends BaseAdapter {
 
-  protected final List<D> dataSet;
+  protected final ObservableList<D> dataSet;
   protected final WeakReference<Context> contextRef;
-  private final Object lock = new Object();
 
   public AbstractListAdapter(Context context) {
-    this(context, new ArrayList<D>());
+    this(context, new ObservableList<D>());
   }
 
-  public AbstractListAdapter(Context context, @NonNull List<D> dataSet) {
+  public AbstractListAdapter(Context context, @NonNull ObservableList<D> dataSet) {
     this.dataSet = dataSet;
     this.contextRef = context != null ? new WeakReference<>(context) : null;
   }
 
-  public final void add(D object) {
-    synchronized (lock) {
-      if(!dataSet.contains(object)) {
-        dataSet.add(object);
-        notifyDataSetChanged();
-      }
-    }
-  }
-
-  public final void addAll(@NonNull List<D> objects) {
-    synchronized (lock) {
-      if(!dataSet.containsAll(objects)) {
-        dataSet.addAll(objects);
-        notifyDataSetChanged();
-      }
-    }
-  }
-
-  public final boolean remove(@NonNull D object) {
-    synchronized (lock) {
-      if(dataSet.contains(object)) {
-        dataSet.remove(object);
-        notifyDataSetChanged();
-        return true;
-      }
-      return false;
-    }
-  }
-
-  public final D removeAt(@IntRange(from = 0) int index) {
-    synchronized (lock) {
-      D removed = null;
-      if(index < dataSet.size()) {
-        removed = dataSet.remove(index);
-        notifyDataSetChanged();
-      }
-      return removed;
-    }
-  }
-
   public final D getItemAt(@IntRange(from = 0) int index) {
-    synchronized (lock) {
-      if(index < dataSet.size()) {
-        return dataSet.get(index);
-      }
-      return null;
-    }
+    return dataSet.get(index);
   }
 
   @Override public int getCount() {
