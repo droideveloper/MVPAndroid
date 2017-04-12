@@ -31,10 +31,10 @@ final class ResultObservable<T> extends Observable<Result<T>> {
   }
 
   @Override protected void subscribeActual(Observer<? super Result<T>> observer) {
-    upstream.subscribe(new ResultObserver<T>(observer));
+    upstream.subscribe(new ResultObserver<>(observer));
   }
 
-  private static class ResultObserver<R> implements Observer<Response<R>> {
+  static class ResultObserver<R> implements Observer<Response<R>> {
     private final Observer<? super Result<R>> observer;
 
     ResultObserver(Observer<? super Result<R>> observer) {
