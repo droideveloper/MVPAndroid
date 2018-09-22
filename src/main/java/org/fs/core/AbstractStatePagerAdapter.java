@@ -35,7 +35,7 @@ public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAda
 
   protected abstract String getClassTag();
   protected abstract boolean isLogEnabled();
-  protected abstract Fragment onBind(int position, D element);
+  protected abstract Fragment bind(int position, D element);
 
   protected final void log(final String str) {
     log(Log.DEBUG, str);
@@ -55,7 +55,7 @@ public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAda
   }
 
   @Override public final Fragment getItem(int position) {
-    return onBind(position, getItemAtIndex(position));
+    return bind(position, getItemAtIndex(position));
   }
 
   @Override public final int getCount() {
@@ -63,9 +63,6 @@ public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAda
   }
 
   protected final D getItemAtIndex(int index) {
-    int limit = dataSet.size();
-    if (index < 0 || index >= limit || limit == 0)
-      return null;
     return dataSet.get(index);
   }
 }

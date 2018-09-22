@@ -15,54 +15,118 @@
  */
 package org.fs.util;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import io.reactivex.CompletableTransformer;
+import io.reactivex.FlowableTransformer;
+import io.reactivex.MaybeTransformer;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import org.fs.common.ViewType;
 
 public final class RxUtility {
 
-  public static <T> ObservableTransformer<T, T> toAsync() {
-    return new ObservableTransformer<T, T>() {
-      @Override public ObservableSource<T> apply(Observable<T> source) {
-        return source
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
-      }
-    };
+  public static CompletableTransformer toAsyncCompletable() {
+    return source -> source
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread());
   }
 
-  public static <T> ObservableTransformer<T, T> toAsyncAndUI(final ViewType view) {
-    return new ObservableTransformer<T, T>() {
-      @Override public ObservableSource<T> apply(Observable<T> source) {
-        return source
-            .compose(RxUtility.<T>toAsync())
-            .doOnSubscribe(new Consumer<Disposable>() {
-              @Override public void accept(@NonNull Disposable disposable) throws Exception {
-                if (view.isAvailable()) {
-                  view.showProgress();
-                }
-              }
-            }).doFinally(new Action() {
-              @Override public void run() throws Exception {
-                if (view.isAvailable()) {
-                  view.hideProgress();
-                }
-              }
-            });
-      }
-    };
+  public static CompletableTransformer toAsyncCompletable(final ViewType view) {
+    return source -> source
+      .compose(toAsyncCompletable())
+      .doOnSubscribe(disposable -> {
+        if (view.isAvailable()) {
+          view.showProgress();
+        }
+      }).doFinally(() -> {
+        if (view.isAvailable()) {
+          view.hideProgress();
+        }
+      });
   }
 
+  public static <T> FlowableTransformer<T, T> toAsyncFlowable() {
+    return source -> source
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  public static <T> FlowableTransformer<T, T> toAsyncFlowable(final ViewType view) {
+    return source -> source
+      .compose(toAsyncFlowable())
+      .doOnSubscribe(disposable -> {
+        if (view.isAvailable()) {
+          view.showProgress();
+        }
+      }).doFinally(() -> {
+        if (view.isAvailable()) {
+          view.hideProgress();
+        }
+      });
+  }
+
+  public static <T> SingleTransformer<T, T> toAsyncSingle() {
+    return source -> source
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  public static <T> SingleTransformer<T, T> toAsyncSingle(final ViewType view) {
+    return source -> source
+      .compose(toAsyncSingle())
+      .doOnSubscribe(disposable -> {
+        if (view.isAvailable()) {
+          view.showProgress();
+        }
+      }).doFinally(() -> {
+        if (view.isAvailable()) {
+          view.hideProgress();
+        }
+      });
+  }
+
+  public static <T> MaybeTransformer<T, T> toAsyncMaybe() {
+    return source -> source
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  public static <T> MaybeTransformer<T, T> toAsyncMaybe(final ViewType view) {
+    return source -> source
+      .compose(toAsyncMaybe())
+      .doOnSubscribe(disposable -> {
+        if (view.isAvailable()) {
+          view.showProgress();
+        }
+      }).doFinally(() -> {
+        if (view.isAvailable()) {
+          view.hideProgress();
+        }
+      });
+  }
+
+  public static <T> ObservableTransformer<T, T> toAsyncObservable() {
+    return source -> source
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  public static <T> ObservableTransformer<T, T> toAsyncObservable(final ViewType view) {
+    return source -> source
+      .compose(toAsyncObservable())
+      .doOnSubscribe(disposable -> {
+        if (view.isAvailable()) {
+          view.showProgress();
+        }
+      }).doFinally(() -> {
+        if (view.isAvailable()) {
+          view.hideProgress();
+        }
+      });
+  }
 
   private RxUtility() {
     throw new RuntimeException("You can not have instance of this type");
   }
-
 }

@@ -15,4 +15,4 @@
  */
 package org.fs.common;
 
-public interface EventType { /** TYPE_DEFINITION **/ }
+public interface EventType { /* TYPE_DEFINITION */ }

@@ -33,11 +33,11 @@ public class GsonConverterFactory extends Converter.Factory {
 
   private final Gson gson;
 
-  public static GsonConverterFactory create(Gson gson) {
+  public static GsonConverterFactory newInstance(Gson gson) {
     return new GsonConverterFactory(gson);
   }
 
-  public static GsonConverterFactory create() {
+  public static GsonConverterFactory newInstance() {
     return new GsonConverterFactory(new Gson());
   }
 

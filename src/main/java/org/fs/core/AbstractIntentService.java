@@ -29,8 +29,8 @@ public abstract class AbstractIntentService<P extends PresenterType> extends Int
     super(strName);
   }
 
-  protected abstract String   getClassTag();
-  protected abstract boolean  isLogEnabled();
+  protected abstract String getClassTag();
+  protected abstract boolean isLogEnabled();
 
   protected void log(final String str) {
     log(Log.DEBUG, str);

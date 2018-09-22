@@ -18,7 +18,6 @@ package org.fs.core;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -57,6 +56,7 @@ public abstract class AbstractViewHolder<D> {
   protected abstract String   getClassTag();
   protected abstract boolean  isLogEnabled();
 
-  public abstract void onBindView(D data);
+  public abstract void bind(D entity);
+  public abstract void unbind();
 
 }

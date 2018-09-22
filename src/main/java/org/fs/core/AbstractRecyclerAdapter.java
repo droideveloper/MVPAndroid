@@ -15,42 +15,43 @@
  */
 package org.fs.core;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.ref.WeakReference;
 import org.fs.util.ObservableList;
+import org.fs.util.PropertyChangedListener;
 
-public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> {
+public abstract class AbstractRecyclerAdapter<D, V extends AbstractRecyclerViewHolder<D>> extends RecyclerView.Adapter<V> implements PropertyChangedListener {
 
   protected final ObservableList<D> dataSet;
-  private final WeakReference<Context> contextRef;
 
-
-  public AbstractRecyclerAdapter(@NonNull ObservableList<D> dataSet, Context context) {
+  public AbstractRecyclerAdapter(@NonNull ObservableList<D> dataSet) {
     this.dataSet = dataSet;
-    this.contextRef = context != null ? new WeakReference<>(context) : null;
   }
 
   protected abstract String getClassTag();
   protected abstract boolean isLogEnabled();
 
-  @Override public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-    if(contextRef != null) {
-      contextRef.clear();
-    }
+  @Override public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+    super.onAttachedToRecyclerView(recyclerView);
+    dataSet.registerPropertyChangedListener(this);
   }
 
-  @Override public V onCreateViewHolder(ViewGroup parent, int viewType) {
-    return null;
+  @Override public void onDetachedFromRecyclerView(@NonNull  RecyclerView recyclerView) {
+    dataSet.unregisterPropertyChangedListener(this);
+    super.onDetachedFromRecyclerView(recyclerView);
   }
 
-  @Override public void onBindViewHolder(V viewHolder, int position) { }
+  @Override public void onBindViewHolder(@NonNull V viewHolder, int position) {
+    viewHolder.bind(dataSet.get(position));
+  }
+
+  @Override public void onViewRecycled(@NonNull V viewHolder) {
+    super.onViewRecycled(viewHolder);
+    viewHolder.unbind();
+  }
 
   protected void log(final String str) {
     log(Log.DEBUG, str);
@@ -74,21 +75,30 @@ public abstract class AbstractRecyclerAdapter<D, V extends RecyclerView.ViewHold
   }
 
   protected final D getItemAtIndex(int index) {
-    int limit = dataSet.size();
-    if(index < 0 || index >= limit || limit == 0)
-      return null;
     return dataSet.get(index);
   }
 
-  protected final Context getContext() {
-    return contextRef != null ? contextRef.get() : null;
+  @Override public void notifyItemsRemoved(int index, int size) {
+    if (size == 1) {
+      notifyItemRemoved(index);
+    } else {
+      notifyItemRangeChanged(index, size);
+    }
   }
 
-  protected final LayoutInflater inflaterFactory() {
-    Context context = getContext();
-    if(context != null) {
-      return LayoutInflater.from(context);
+  @Override public void notifyItemsChanged(int index, int size) {
+    if (size == 1) {
+      notifyItemChanged(index);
+    } else {
+      notifyItemRangeChanged(index, size);
     }
-    return null;
+  }
+
+  @Override public void notifyItemsInserted(int index, int size) {
+    if (size == 1) {
+      notifyItemInserted(index);
+    } else {
+      notifyItemRangeInserted(index, size);
+    }
   }
 }

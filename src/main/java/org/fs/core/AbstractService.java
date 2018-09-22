@@ -25,8 +25,8 @@ import java.io.StringWriter;
 
 public abstract class AbstractService<P extends PresenterType> extends Service {
 
-  protected abstract String   getClassTag();
-  protected abstract boolean  isLogEnabled();
+  protected abstract String getClassTag();
+  protected abstract boolean isLogEnabled();
 
   protected void log(final String str) {
     log(Log.DEBUG, str);

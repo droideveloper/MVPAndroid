@@ -32,23 +32,23 @@ public abstract class AbstractPresenter<V extends ViewType> {
     this.view = view;
   }
 
-  public void onResume()  {}
+  public void onResume(){}
 
-  public void onPause()   {}
+  public void onPause(){}
 
-  public void onStart()   {}
+  public void onStart(){}
 
-  public void onStop()    {}
+  public void onStop(){}
 
-  public void onCreate()  {}
+  public void onCreate(){}
 
-  public void onDestroy() {}
+  public void onDestroy(){}
 
-  public void onBackPressed() { }
+  public void onBackPressed(){}
 
-  public void restoreState(Bundle restoreState) {}
+  public void restoreState(Bundle restoreState){}
 
-  public void storeState(Bundle storeState)     {}
+  public void storeState(Bundle storeState){}
 
   public void activityResult(int requestCode, int resultCode, Intent data) {}
 

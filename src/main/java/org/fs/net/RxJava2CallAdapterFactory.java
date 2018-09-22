@@ -59,7 +59,7 @@ public final class RxJava2CallAdapterFactory extends CallAdapter.Factory {
    * Returns an instance which creates synchronous observables that do not operate on any scheduler
    * by default.
    */
-  public static RxJava2CallAdapterFactory create() {
+  public static RxJava2CallAdapterFactory newInstance() {
     return new RxJava2CallAdapterFactory(null, false);
   }
 
@@ -67,7 +67,7 @@ public final class RxJava2CallAdapterFactory extends CallAdapter.Factory {
    * Returns an instance which creates asynchronous observables. Applying
    * {@link Observable#subscribeOn} has no effect on stream types created by this factory.
    */
-  public static RxJava2CallAdapterFactory async() {
+  public static RxJava2CallAdapterFactory asyncInstance() {
     return new RxJava2CallAdapterFactory(null, true);
   }
 
@@ -75,7 +75,7 @@ public final class RxJava2CallAdapterFactory extends CallAdapter.Factory {
    * Returns an instance which creates synchronous observables that
    * {@linkplain Observable#subscribeOn(Scheduler) subscribe on} {@code scheduler} by default.
    */
-  public static RxJava2CallAdapterFactory create(Scheduler scheduler) {
+  public static RxJava2CallAdapterFactory newInstance(Scheduler scheduler) {
     if (scheduler == null) throw new NullPointerException("scheduler == null");
     return new RxJava2CallAdapterFactory(scheduler, false);
   }

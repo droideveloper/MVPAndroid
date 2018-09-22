@@ -28,10 +28,8 @@ public abstract class AbstractRecyclerViewHolder<T> extends RecyclerView.ViewHol
     super(itemView);
   }
 
-  protected abstract String   getClassTag();
-  protected abstract boolean  isLogEnabled();
-
-  public abstract void onBindView(T data);
+  protected abstract String getClassTag();
+  protected abstract boolean isLogEnabled();
 
   protected void log(final String str) {
     log(Log.DEBUG, str);
@@ -50,10 +48,6 @@ public abstract class AbstractRecyclerViewHolder<T> extends RecyclerView.ViewHol
     }
   }
 
-  protected View getView() {
-    return itemView != null ? itemView : null;
-  }
-
-  public void attached() { }
-  public void detached() { }
+  public abstract void bind(T entity);
+  public abstract void unbind();
 }

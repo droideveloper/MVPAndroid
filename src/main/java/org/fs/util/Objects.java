@@ -18,7 +18,6 @@ package org.fs.util;
 import android.text.TextUtils;
 import io.reactivex.functions.Predicate;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -91,22 +90,14 @@ public final class Objects {
 
   public static File findFirstExtension(File directory, final String extension) {
     if(directory.isDirectory()) {
-      return Arrays.first(directory.listFiles(new FilenameFilter() {
-        @Override public boolean accept(File f, String name) {
-          return name.endsWith(extension);
-        }
-      }));
+      return Arrays.first(directory.listFiles((f, name) -> name.endsWith(extension)));
     }
     return null;
   }
 
   public static File findFirst(File directory, final String text) {
     if (directory.isDirectory()) {
-      return Arrays.first(directory.listFiles(new FilenameFilter() {
-        @Override public boolean accept(File dir, String name) {
-          return name.contains(text);
-        }
-      }));
+      return Arrays.first(directory.listFiles((dir, name) -> name.contains(text)));
     }
     return null;
   }
