@@ -45,7 +45,7 @@ public abstract class AbstractRecyclerAdapter<D, V extends AbstractRecyclerViewH
   }
 
   @Override public void onBindViewHolder(@NonNull V viewHolder, int position) {
-    viewHolder.bind(dataSet.get(position));
+    viewHolder.bind(getItemAtIndex(position));
   }
 
   @Override public void onViewRecycled(@NonNull V viewHolder) {
@@ -82,7 +82,7 @@ public abstract class AbstractRecyclerAdapter<D, V extends AbstractRecyclerViewH
     if (size == 1) {
       notifyItemRemoved(index);
     } else {
-      notifyItemRangeChanged(index, size);
+      notifyItemRangeRemoved(index, size);
     }
   }
 

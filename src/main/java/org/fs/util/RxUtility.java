@@ -39,7 +39,7 @@ public final class RxUtility {
         if (view.isAvailable()) {
           view.showProgress();
         }
-      }).doFinally(() -> {
+      }).doOnComplete(() -> {
         if (view.isAvailable()) {
           view.hideProgress();
         }
@@ -59,7 +59,11 @@ public final class RxUtility {
         if (view.isAvailable()) {
           view.showProgress();
         }
-      }).doFinally(() -> {
+      }).doOnComplete(() -> {
+        if (view.isAvailable()) {
+          view.hideProgress();
+        }
+      }).doAfterNext((data) -> {
         if (view.isAvailable()) {
           view.hideProgress();
         }
@@ -79,7 +83,7 @@ public final class RxUtility {
         if (view.isAvailable()) {
           view.showProgress();
         }
-      }).doFinally(() -> {
+      }).doOnSuccess((data) -> {
         if (view.isAvailable()) {
           view.hideProgress();
         }
@@ -99,7 +103,7 @@ public final class RxUtility {
         if (view.isAvailable()) {
           view.showProgress();
         }
-      }).doFinally(() -> {
+      }).doOnComplete(() -> {
         if (view.isAvailable()) {
           view.hideProgress();
         }
@@ -119,7 +123,7 @@ public final class RxUtility {
         if (view.isAvailable()) {
           view.showProgress();
         }
-      }).doFinally(() -> {
+      }).doOnNext((data) -> {
         if (view.isAvailable()) {
           view.hideProgress();
         }

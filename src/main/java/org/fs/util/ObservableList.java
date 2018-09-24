@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class ObservableList<T> implements List<T> {
+public class ObservableList<T> extends ArrayList<T> {
 
   private final List<T> itemStore = new ArrayList<>();
   private final List<PropertyChangedListener> listeners = new ArrayList<>();
@@ -44,10 +44,6 @@ public class ObservableList<T> implements List<T> {
         listeners.remove(listener);
       }
     }
-  }
-
-  public final ArrayList<T> toArrayList() {
-    return new ArrayList<>(itemStore);
   }
 
   @Override public int size() {
@@ -91,7 +87,7 @@ public class ObservableList<T> implements List<T> {
       boolean success = itemStore.add(t);
       int index = itemStore.indexOf(t);
       if (!listeners.isEmpty()) {
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null && success) {
             listener.notifyItemsInserted(index, 1);
@@ -107,7 +103,7 @@ public class ObservableList<T> implements List<T> {
       int index = itemStore.indexOf(o);
       boolean success = itemStore.remove(o);
       if (!listeners.isEmpty()) {
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null && success) {
             listener.notifyItemsRemoved(index, 1);
@@ -130,7 +126,7 @@ public class ObservableList<T> implements List<T> {
       if (!listeners.isEmpty()) {
         int index = itemStore.size() - c.size();
         int size = c.size();
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null && success) {
             listener.notifyItemsInserted(index, size);
@@ -146,7 +142,7 @@ public class ObservableList<T> implements List<T> {
       boolean success = itemStore.addAll(c);
       if (!listeners.isEmpty()) {
         int size = c.size();
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null && success) {
             listener.notifyItemsInserted(index, size);
@@ -163,7 +159,7 @@ public class ObservableList<T> implements List<T> {
       int size = c.size();
       boolean success = itemStore.removeAll(c);
       if (!listeners.isEmpty()) {
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null && success) {
             listener.notifyItemsRemoved(index, size);
@@ -181,7 +177,7 @@ public class ObservableList<T> implements List<T> {
       int total = itemStore.size();
       boolean success = itemStore.retainAll(c);
       if (!listeners.isEmpty()) {
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null && success) {
             listener.notifyItemsRemoved(0, index);
@@ -198,7 +194,7 @@ public class ObservableList<T> implements List<T> {
       int size = itemStore.size();
       itemStore.clear();
       if (!listeners.isEmpty()) {
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null) {
             listener.notifyItemsRemoved(0, size);
@@ -230,7 +226,7 @@ public class ObservableList<T> implements List<T> {
     synchronized (itemStore) {
       T set = itemStore.set(index, element);
       if (!listeners.isEmpty()) {
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null ) {
             listener.notifyItemsChanged(index, 1);
@@ -245,7 +241,7 @@ public class ObservableList<T> implements List<T> {
     synchronized (itemStore) {
       itemStore.add(index, element);
       if (!listeners.isEmpty()) {
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null ) {
             listener.notifyItemsInserted(index, 1);
@@ -259,7 +255,7 @@ public class ObservableList<T> implements List<T> {
     synchronized (itemStore) {
       T removed = itemStore.remove(index);
       if (!listeners.isEmpty()) {
-        for(int i = 0, z =listeners.size(); i < z; i++) {
+        for(int i = 0, z = listeners.size(); i < z; i++) {
           final PropertyChangedListener listener = listeners.get(i);
           if (listener != null ) {
             listener.notifyItemsRemoved(index, 1);
