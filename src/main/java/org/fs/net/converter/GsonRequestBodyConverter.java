@@ -29,8 +29,8 @@ import retrofit2.Converter;
 
 public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
 
-  private final static MediaType MEDIA_TYPE       = MediaType.parse("application/json; charset=UTF-8");
-  private final static Charset   DEFAULT_CHARSET  = Charset.forName("UTF-8");
+  private final static MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
+  private final static Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
   private final TypeAdapter<T> typeAdapter;
 

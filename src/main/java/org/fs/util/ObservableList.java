@@ -80,7 +80,7 @@ public class ObservableList<T> implements List<T> {
     }
   }
 
-  @NonNull @Override public <R> R[] toArray(R[] a) {
+  @NonNull @Override public <R> R[] toArray(@NonNull R[] a) {
     synchronized (itemStore) {
       return itemStore.toArray(a);
     }
