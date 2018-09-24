@@ -31,11 +31,11 @@ public final class ViewUtility {
     return (T) view;
   }
 
-  @SuppressWarnings("unchecked") public static <T> T findViewById(View view, @IdRes int viewID) {
-    return (T) view.findViewById(viewID);
+  @SuppressWarnings("unchecked") public static <T> T findViewById(View view, @IdRes int viewId) {
+    return (T) view.findViewById(viewId);
   }
 
-  public static <T> T findViewById(Activity activity, @IdRes int viewID) {
-    return findViewById(activity.findViewById(android.R.id.content), viewID);
+  public static <T> T findViewById(Activity activity, @IdRes int viewId) {
+    return findViewById(activity.findViewById(android.R.id.content), viewId);
   }
 }
