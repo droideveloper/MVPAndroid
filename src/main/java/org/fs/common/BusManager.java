@@ -34,7 +34,6 @@ public final class BusManager {
   }
 
   void unregister(Disposable disposable) {
-    //if it's null or not unsubscribed then we are good to unregister it
     if(disposable != null && !disposable.isDisposed()) {
       disposable.dispose();
     }

@@ -16,10 +16,10 @@
 package org.fs.common;
 
 import android.content.Context;
-import android.support.v4.util.ArrayMap;
+import android.support.v4.util.Pair;
 import android.view.View;
 
 public interface NavigationType<T> {
 
-  void onSelectCategory(Context context, T category, ArrayMap<View, String> bundle);
+  void onSelectCategory(Context context, T category, Pair<View, String>... bundle);
 }

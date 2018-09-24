@@ -23,20 +23,26 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.AndroidSupportInjection;
+import dagger.android.support.HasSupportFragmentInjector;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.inject.Inject;
 import org.fs.common.PresenterType;
 
-public abstract class AbstractDialogFragment<P extends PresenterType> extends DialogFragment {
+public abstract class AbstractDialogFragment<P extends PresenterType> extends DialogFragment implements
+    HasSupportFragmentInjector {
 
   @Inject protected P presenter;
+  @Inject protected DispatchingAndroidInjector<Fragment> supportFragmentInjector;
 
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     AndroidSupportInjection.inject(this);
@@ -86,6 +92,10 @@ public abstract class AbstractDialogFragment<P extends PresenterType> extends Di
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     return presenter.onOptionsItemSelected(item);
+  }
+
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return supportFragmentInjector;
   }
 
   public void showProgress() {

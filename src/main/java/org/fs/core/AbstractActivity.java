@@ -22,19 +22,25 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.inject.Inject;
 import org.fs.common.PresenterType;
 
-public abstract class AbstractActivity<P extends PresenterType> extends AppCompatActivity {
+public abstract class AbstractActivity<P extends PresenterType> extends AppCompatActivity implements
+    HasSupportFragmentInjector {
 
   @Inject protected P presenter;
+  @Inject protected DispatchingAndroidInjector<Fragment> supportFragmentInjector;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     AndroidInjection.inject(this);
@@ -69,6 +75,10 @@ public abstract class AbstractActivity<P extends PresenterType> extends AppCompa
   @Override protected void onDestroy() {
     presenter.onDestroy();
     super.onDestroy();
+  }
+
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return supportFragmentInjector;
   }
 
   @Override public void onBackPressed() {

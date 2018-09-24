@@ -20,17 +20,23 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.MenuItem;
 import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.inject.Inject;
 import org.fs.common.PresenterType;
 
-public abstract class AbstractPreferenceActivity<P extends PresenterType> extends PreferenceActivity {
+public abstract class AbstractPreferenceActivity<P extends PresenterType> extends PreferenceActivity implements
+    HasSupportFragmentInjector {
 
   @Inject protected P presenter;
+  @Inject protected DispatchingAndroidInjector<Fragment> supportFragmentInjector;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     AndroidInjection.inject(this);
@@ -65,6 +71,10 @@ public abstract class AbstractPreferenceActivity<P extends PresenterType> extend
   @Override protected void onDestroy() {
     presenter.onDestroy();
     super.onDestroy();
+  }
+
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return supportFragmentInjector;
   }
 
   @Override public void onBackPressed() {
