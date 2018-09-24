@@ -28,6 +28,8 @@ public abstract class AbstractRecyclerViewHolder<T> extends RecyclerView.ViewHol
     super(itemView);
   }
 
+  protected T entity;
+
   protected abstract String getClassTag();
   protected abstract boolean isLogEnabled();
 
