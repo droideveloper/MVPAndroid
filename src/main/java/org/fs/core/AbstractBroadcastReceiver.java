@@ -29,7 +29,7 @@ public abstract class AbstractBroadcastReceiver<P extends PresenterType> extends
     super();
   }
 
-  protected abstract String  getClassTag();
+  protected abstract String getClassTag();
   protected abstract boolean isLogEnabled();
 
   protected void log(final String str) {

@@ -23,8 +23,10 @@ import android.util.Log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import org.fs.util.ObservableList;
+import org.fs.util.PropertyChangedListener;
 
-public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
+public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter implements
+    PropertyChangedListener {
 
   protected final ObservableList<D> dataSet;
 
@@ -35,14 +37,14 @@ public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
 
   protected abstract String getClassTag();
   protected abstract boolean isLogEnabled();
-  protected abstract Fragment onBind(int position, D element);
+  protected abstract Fragment bind(int position, D element);
 
   protected final void log(final String str) {
     log(Log.DEBUG, str);
   }
 
   @Override public final Fragment getItem(int position) {
-    return onBind(position, getItemAtIndex(position));
+    return bind(position, getItemAtIndex(position));
   }
 
   protected void log(Throwable error) {
@@ -64,8 +66,28 @@ public abstract class AbstractPagerAdapter<D> extends FragmentPagerAdapter {
 
   protected final D getItemAtIndex(int index) {
     int limit = dataSet.size();
-    if(index < 0 || index >= limit || limit == 0)
+    if(index < 0 || index >= limit)
       return null;
     return dataSet.get(index);
+  }
+
+  public final void register() {
+    dataSet.registerPropertyChangedListener(this);
+  }
+
+  public final void unregister() {
+    dataSet.unregisterPropertyChangedListener(this);
+  }
+
+  @Override public void notifyItemsRemoved(int index, int size) {
+    notifyDataSetChanged();
+  }
+
+  @Override public void notifyItemsChanged(int index, int size) {
+    notifyDataSetChanged();
+  }
+
+  @Override public void notifyItemsInserted(int index, int size) {
+    notifyDataSetChanged();
   }
 }

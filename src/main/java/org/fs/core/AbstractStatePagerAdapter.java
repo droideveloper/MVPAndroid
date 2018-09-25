@@ -23,8 +23,10 @@ import android.util.Log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import org.fs.util.ObservableList;
+import org.fs.util.PropertyChangedListener;
 
-public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAdapter {
+public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAdapter implements
+    PropertyChangedListener {
 
   private final ObservableList<D> dataSet;
 
@@ -64,5 +66,25 @@ public abstract class AbstractStatePagerAdapter<D> extends FragmentStatePagerAda
 
   protected final D getItemAtIndex(int index) {
     return dataSet.get(index);
+  }
+
+  public final void register() {
+    dataSet.registerPropertyChangedListener(this);
+  }
+
+  public final void unregister() {
+    dataSet.unregisterPropertyChangedListener(this);
+  }
+
+  @Override public void notifyItemsRemoved(int index, int size) {
+    notifyDataSetChanged();
+  }
+
+  @Override public void notifyItemsChanged(int index, int size) {
+    notifyDataSetChanged();
+  }
+
+  @Override public void notifyItemsInserted(int index, int size) {
+    notifyDataSetChanged();
   }
 }
