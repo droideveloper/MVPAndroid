@@ -50,11 +50,13 @@ dependencies {
   //RxJava and RxAndroid
   implementation "io.reactivex.rxjava2:rxandroid:$REACTIVE_ANDROID"
   implementation "io.reactivex.rxjava2:rxjava:$REACTIVE_JAVA"
+
   implementation "com.google.dagger:dagger:$DAGGER_VERSION"
   implementation "com.google.dagger:dagger-android:$DAGGER_VERSION"
   implementation "com.google.dagger:dagger-android-support:$DAGGER_VERSION"
   annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
   annotationProcessor "com.google.dagger:dagger-android-processor:$DAGGER_VERSION"
+
   implementation "android.arch.persistence.room:rxjava2:$DATABASE_VERSION"
   implementation "android.arch.persistence.room:runtime:$DATABASE_VERSION"
   annotationProcessor "android.arch.persistence.room:compiler:$DATABASE_VERSION"
