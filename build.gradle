@@ -7,7 +7,7 @@ android {
     minSdkVersion 16
     targetSdkVersion 28
     versionCode 1
-    versionName "1.0"
+    versionName "0.0.1"
   }
 
   buildTypes {
@@ -61,3 +61,12 @@ dependencies {
   implementation "android.arch.persistence.room:runtime:$DATABASE_VERSION"
   annotationProcessor "android.arch.persistence.room:compiler:$DATABASE_VERSION"
 }
+
+
+ext {
+  PUBLISH_GROUP_ID = 'org.fs.architecture'
+  PUBLISH_ARTIFACT_ID = 'mvp-java'
+  PUBLISH_VERSION = '0.0.1'
+}
+
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
