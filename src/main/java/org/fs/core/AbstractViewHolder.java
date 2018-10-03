@@ -23,7 +23,7 @@ import java.io.StringWriter;
 
 public abstract class AbstractViewHolder<D> {
 
-  protected D data;
+  protected D entity;
   protected final View view;
 
   public AbstractViewHolder(@NonNull View view) {

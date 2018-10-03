@@ -34,8 +34,8 @@ public abstract class AbstractSQLite extends SQLiteOpenHelper {
     super(context, name, factory, version, errorHandler);
   }
 
-  protected abstract String   getClassTag();
-  protected abstract boolean  isLogEnabled();
+  protected abstract String getClassTag();
+  protected abstract boolean isLogEnabled();
 
   protected void log(final String str) {
     log(Log.DEBUG, str);

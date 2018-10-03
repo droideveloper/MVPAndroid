@@ -15,31 +15,22 @@
  */
 package org.fs.core;
 
-import android.content.Context;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.ref.WeakReference;
 import org.fs.util.ObservableList;
 
 public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> extends BaseAdapter {
 
   protected final ObservableList<D> dataSet;
-  protected final WeakReference<Context> contextRef;
 
-  public AbstractListAdapter(Context context) {
-    this(context, new ObservableList<D>());
-  }
-
-  public AbstractListAdapter(Context context, @NonNull ObservableList<D> dataSet) {
+  public AbstractListAdapter(@NonNull ObservableList<D> dataSet) {
     this.dataSet = dataSet;
-    this.contextRef = context != null ? new WeakReference<>(context) : null;
   }
 
   public final D getItemAt(@IntRange(from = 0) int index) {
@@ -80,22 +71,10 @@ public abstract class AbstractListAdapter<D, VH extends AbstractViewHolder<D>> e
     return viewHolder.getView();
   }
 
-  protected abstract String   getClassTag();
-  protected abstract boolean  isLogEnabled();
-  protected abstract VH       onCreateViewHolder(ViewGroup parent, int viewType);
-  protected abstract void     onBindViewHolder(VH viewHolder, int position);
-
-  protected final Context getContext() {
-    return contextRef != null ? contextRef.get() : null;
-  }
-
-  protected final LayoutInflater inflaterFactory() {
-    final Context context = getContext();
-    if(context != null) {
-      return LayoutInflater.from(context);
-    }
-    return null;
-  }
+  protected abstract String getClassTag();
+  protected abstract boolean isLogEnabled();
+  protected abstract VH onCreateViewHolder(ViewGroup parent, int viewType);
+  protected abstract void onBindViewHolder(VH viewHolder, int position);
 
   protected void log(String str) {
     log(Log.DEBUG, str);
